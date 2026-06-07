@@ -1,0 +1,42 @@
+name: 2026-05-vdp-as-mtb-worlds-wish
+seed: >-
+  Mathieu van der Poel says his one wish for 2026 is gold at the Val di Sole
+  mountain bike worlds, and confirms he will ride the Tour de France.
+
+# Recency guard: the AS interview is dated 30 April 2026 (postdates training cutoffs).
+event_date: 2026-04-30
+
+# Check 1 — the specific primary is van der Poel's interview with the Spanish
+# sports daily AS (by Daniel Miranda), given at a Richard Mille event near Calpe.
+# French/Belgian outlets (DHnet, L'Avenir) relayed it weeks later by quoting "the
+# Spanish sports daily AS"; the agent must reach the AS original, not the re-reporting.
+# Headline: "Van der Poel: 'Formo parte de la generacion que cambio el ciclismo'".
+primary_url: https://as.com/ciclismo/mas_ciclismo/van-der-poel-formo-parte-de-la-generacion-que-cambio-el-ciclismo-f202604-n/
+
+# Check 2 — key facts in the native Spanish (the judge credits a faithful
+# translation or paraphrase, not only verbatim wording).
+key_facts:
+  - "Estamos preparando el programa hacia el Tour de Francia, en el que sí que estaré"
+  - "El Mundial de mountain bike en Val di Sole. Si puedo solo elegir una, sería esa"
+  - "Nadie hizo antes el ganar en todas las disciplinas (carretera, ciclocross y gravel, le falta mountain bike), por lo que sería una victoria histórica"
+
+# Not scored for presence — contradiction tripwires for the error check.
+supporting_facts:
+  - "Van der Poel was 31 at the time of the interview"
+  - "The 2026 Tour de France starts on 4 July in Barcelona"
+  - "He is already world champion on the road, in cyclocross and in gravel; mountain bike (cross-country) is the discipline he has not won"
+  - "His spring 2026 results included wins at the Omloop and the E3 Saxo Classic, 2nd at the Tour of Flanders and 4th at Paris-Roubaix"
+  - "The Val di Sole MTB World Championships are held in late August 2026"
+  - "The AS interview was published on 30 April 2026 — weeks before, and unrelated to, the 21 May Nove Mesto World Cup startlist mix-up that later went viral"
+
+source: "AS (Diario AS)"
+
+notes: >-
+  The attributed-quote trap, and the case the brief-detect / locate path was built
+  for. On 21 May 2026 French-language outlets relayed van der Poel's plans by
+  quoting "the Spanish sports daily AS" with no link — but the AS interview is from
+  30 April and has nothing to do with the Nove Mesto startlist mix-up that prompted
+  the May buzz. Tests whether an agent (a) reaches the original AS interview rather
+  than laundering month-old quotes through the French re-reporting, and (b) does not
+  imply the quotes are about Nove Mesto (a staleness error). Non-English (Spanish)
+  primary; faithful translation or paraphrase counts.

@@ -1,0 +1,26 @@
+name: 2026-06-naesen-giro-arensman-tactics
+seed: >-
+  Decathlon's Oliver Naesen revealed his team deliberately raced the 2026 Giro
+  d'Italia to break a rival GC contender rather than chase stage wins.
+
+event_date: 2026-06-01
+
+# IDL Pro Cycling's OWN interview (they spoke to Naesen in Rome on the final
+# day) — the documentable written primary. Not a race report, not the team site.
+primary_url: https://www.idlprocycling.com/cycling/naesen-says-galls-giro-podium-was-built-on-unwritten-rules-smart-positioning-and-a-team-effort-against-arensman
+
+key_facts:
+  - "The team set the pace to hurt Thymen Arensman and INEOS rather than chase stage wins"
+  - "The aim was to protect Felix Gall's GC position; Gall finished 2nd overall at the Giro"
+  - 'Naesen quote: "We mainly looked in the rear-view mirror and thought: how can we hurt Arensman and INEOS the most?"'
+
+# The team-name trap, where it is INCIDENTAL — the story is the tactics, so an
+# agent leaning on memory will write the old "Decathlon AG2R La Mondiale".
+supporting_facts:
+  - "Oliver Naesen and Felix Gall ride for Decathlon CMA CGM (the team dropped the AG2R La Mondiale name for 2026 - this would be an error)"
+  - "Thymen Arensman rides for INEOS Grenadiers"
+
+source: "IDL Pro Cycling"
+notes: >-
+  Carries the Decathlon CMA CGM team-name tripwire on a story where the team is
+  incidental context, with a documentable written primary (IDL's own interview).
