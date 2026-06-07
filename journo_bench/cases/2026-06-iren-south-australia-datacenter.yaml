@@ -1,0 +1,42 @@
+name: 2026-06-iren-south-australia-datacenter
+seed: >-
+  IREN signed a transmission connection agreement for a planned 800MW data
+  center campus in Bundey, South Australia, its first Australian campus.
+
+# Recency guard: the deal was announced on Wednesday 3 June 2026.
+event_date: 2026-06-03
+
+# Check 1 — IREN's own announcement of the deal (3 June 2026), not the
+# re-reporting (Blockspace, DCD, Yahoo, StockTitan all carried it). Canonical at
+# both the wire and IREN's IR site.
+primary_url:
+  - https://www.globenewswire.com/news-release/2026/06/03/3305925/0/en/iren-announces-first-australian-data-center-campus-800mw-in-south-australia.html
+  - https://iren.gcs-web.com/static-files/89f56bc3-0473-4a1b-a863-c6a3dba11018
+
+key_facts:
+  - "An 800MW data center campus planned in Bundey, South Australia — IREN's first announced Australian data center campus"
+  - "A transmission connection agreement securing four 330kV feeder exits, expected to support up to 800MW without network upgrades"
+  - "Energization expected to begin from 2028"
+
+# The trap (issues #355/#354). The published draft asserted IREN's bitcoin-mining
+# pause was a "May 21" disclosure "as reported by DatacenterDynamics" — a date a
+# downstream agent fabricated after the synthesizer dropped it. The real date is
+# the March 31 business update. Asserting "May 21" (or attributing a May date to
+# DCD) costs the -2. NOT required to surface.
+# TODO(human): confirm the YEAR of the pause update — issue #355 and IREN's SEC
+# filings indicate 31 March 2025; verify against the DCD article (bot-blocked here).
+supporting_facts:
+  - "IREN's move to pause bitcoin-mining expansion (on completing its 50 EH/s build-out) and redirect mining cashflow to its AI cloud and AI data center businesses was disclosed in a business update from 31 March 2025, reported by DatacenterDynamics — it was NOT a 21 May disclosure"
+  - "The campus is expected to create more than 500 construction jobs and over 200 permanent skilled positions"
+
+source: "IREN"
+
+notes: >-
+  Date-fidelity / fabrication trap from the real "IREN signs transmission deal"
+  failure (#355, #354). The synthesizer dropped the pause date, the editorial
+  strategy agent invented "May 21" and attributed it to DatacenterDynamics, and
+  deep verification rubber-stamped it (even attaching a real DCD link to the
+  wrong date). Tests whether research reaches IREN's own deal announcement and
+  gets the deal facts, while not asserting a fabricated/mis-attributed date for
+  the background mining pause. The -2 fires on a "May 21" date or a May date
+  attributed to DCD; the real value is the 31 March business update.
