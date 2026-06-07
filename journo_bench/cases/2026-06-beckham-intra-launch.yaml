@@ -1,0 +1,29 @@
+name: 2026-06-beckham-intra-launch
+seed: >-
+  Romeo Beckham has launched a football-inspired fashion brand, sharing an
+  introductory note with the brand's audience.
+
+event_date: 2026-06-07
+
+# Genuine social-origin: the launch broke as the brand's own Instagram
+# introductory post (no press release). The primary is the @intra account /
+# launch post; the news outlets (The Independent, Hello, etc.) re-reported it.
+# Tests reaching the original post vs the write-ups.
+primary_url: https://www.instagram.com/intra
+
+key_facts:
+  - "Romeo Beckham has launched a football-inspired fashion/sportswear brand called Intra"
+  - "He co-founded Intra with Justin Saul"
+  - "The brand's introductory note says Intra started with the feeling you have before a match: before the whistle, before the crowd, before anyone's watching"
+
+supporting_facts:
+  - "Romeo Beckham is the son of David and Victoria Beckham"
+  - "The brand launched in early June 2026"
+
+source: "Intra"
+notes: >-
+  Social-post primary: the announcement is the brand's own Instagram post.
+  CAVEAT — Instagram post URLs aren't cleanly findable, so the primary is keyed
+  to the @intra account; a citation of a specific @intra post may not match.
+  The likely failure mode (citing The Independent instead of the post) is the
+  real signal this case is for.

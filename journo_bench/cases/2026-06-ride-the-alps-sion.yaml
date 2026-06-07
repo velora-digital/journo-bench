@@ -1,0 +1,27 @@
+name: 2026-06-ride-the-alps-sion
+seed: >-
+  Ride the Alps announced a three-day cycling weekend around Sion, Switzerland,
+  in late June, with riders able to do one day or all three.
+
+event_date: 2026-05-31
+
+# The organiser's own event site is the primary — more authoritative than the
+# Instagram announcement, and what a desk would link. Any ridethealps.ch/en
+# page (homepage or a climb page) counts.
+primary_url: https://ridethealps.ch/en/
+
+key_facts:
+  - "A three-day Ride the Alps weekend runs 26-28 June 2026 in the Valais, around Sion"
+  - "The three days are the Sanetsch (26 June), Moiry (27 June) and Tseuzier (28 June) climbs"
+
+supporting_facts:
+  - "Sion is in the Valais canton of Switzerland"
+  - "Riders can take part in a single day or the full three-day sequence"
+  - "Participation is free, with the climbs closed to motor traffic"
+
+source: "Ride the Alps"
+notes: >-
+  Tests reaching the organiser's official event site (ridethealps.ch) rather
+  than the tourism aggregators (myswitzerland.com, valdanniviers.ch) that
+  re-list it. NOT a social-post case: the event has an official site, which
+  outranks the Instagram announcement as the primary.

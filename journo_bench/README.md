@@ -108,6 +108,16 @@ do) is a deliberate later step.
   A company's results release, yes; a wire story about it, no.) This is the
   line `primary_reached` is meant to draw, so set `primary_url` to the
   document a top publication would cite.
+  - **A social post is the primary only when the news genuinely broke there
+    and there is no more-authoritative official source.** A personal account
+    announcing a transfer/retirement, a founder breaking news on X — yes. But
+    if an organiser/company/official page covers the same thing, that page
+    outranks the post (e.g. an event's own site beats its Instagram announcing
+    it). Don't mistake "social reported it" for "social is the primary."
+  - **The primary must be documentable.** If the origin is a radio/TV interview
+    with no linkable broadcaster artifact, a desk attributes it in prose with no
+    URL — so there's nothing for `primary_reached` to check. Skip those stories;
+    they can't carry a case.
 - **Scored on the report, not the browse trail.** Only what the agent puts
   in its report counts — sources gathered but omitted don't, which holds every
   agent to the same "what did you actually deliver" bar.
