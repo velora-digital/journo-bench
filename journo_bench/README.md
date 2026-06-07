@@ -101,6 +101,13 @@ do) is a deliberate later step.
 - **Author the answer key against the real primary source** — never against
   what any agent (including Velora) returned. Stored runs are fine for
   *finding* candidate stories, not for setting the correct answer.
+- **The primary is what a best-in-class desk would actually link.** The
+  authoritative document itself — the filing, bill, ruling, or release — not a
+  third-party tracker, a press release / sponsor's framing, or another outlet's
+  write-up. (A legislature's bill page, yes; LegiScan or a news article, no.
+  A company's results release, yes; a wire story about it, no.) This is the
+  line `primary_reached` is meant to draw, so set `primary_url` to the
+  document a top publication would cite.
 - **Scored on the report, not the browse trail.** Only what the agent puts
   in its report counts — sources gathered but omitted don't, which holds every
   agent to the same "what did you actually deliver" bar.
