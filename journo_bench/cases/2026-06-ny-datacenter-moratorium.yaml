@@ -1,0 +1,26 @@
+name: 2026-06-ny-datacenter-moratorium
+seed: >-
+  New York's legislature passed a one-year moratorium on new large data center
+  permits and sent it to the governor.
+
+event_date: 2026-06-04
+
+# The primary is the legislative text itself, not the press coverage (NYT, The
+# Verge, Bloomberg all re-reported it). Tests reaching the official bill page.
+primary_url: https://www.nysenate.gov/legislation/bills/2025/S10642
+
+key_facts:
+  - "A one-year moratorium on permits for new large data centers"
+  - "The bill is the Responsible Data Center Development Act (Senate S10642 / Assembly A11560)"
+  - "A large data center is defined as one with peak demand of 20 megawatts or more"
+
+supporting_facts:
+  - "The bill's lead Senate sponsor is State Senator Kristen Gonzalez"
+  - "The Senate passed the bill on June 4, 2026"
+  - "The bill requires at least 90% of such facilities' electricity to come from renewable energy by 2040"
+
+source: "New York State Senate"
+notes: >-
+  Official legislative primary. Tests whether an agent reaches the bill page
+  and gets the act name, the S/A bill numbers, and the 20MW threshold right
+  rather than relying on news summaries.

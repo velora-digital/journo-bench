@@ -1,0 +1,25 @@
+name: 2026-06-wealthfront-q1
+seed: >-
+  Wealthfront reported fiscal first-quarter 2027 results, with revenue up year
+  over year and record total platform assets.
+
+event_date: 2026-06-04
+
+# Single clear primary: the company's results release.
+primary_url: https://www.globenewswire.com/news-release/2026/06/04/3307089/0/en/Wealthfront-Reports-Fiscal-First-Quarter-2027-Results.html
+
+key_facts:
+  - "Revenue of $90.5 million, up 7% year over year"
+  - "Record Total Platform Assets of $96.6 billion, up 19% year over year"
+  - 'Quote from CEO David Fortunato: "We ended the quarter with record Total Platform Assets of $96.6 billion despite a dynamic macroeconomic environment."'
+
+supporting_facts:
+  - "Wealthfront trades on the Nasdaq under the ticker WLTH"
+  - "The quarter ended April 30, 2026"
+  - "The company ran its inaugural share repurchase program, buying back over 3 million shares at an average price of $8.66"
+
+source: "Wealthfront"
+notes: >-
+  Stat-heavy single-primary case. Tests number fidelity (revenue, platform
+  assets, growth rates) plus a verbatim CEO quote cited to the company. The
+  buyback details are an easy thing to garble (supporting-fact tripwire).

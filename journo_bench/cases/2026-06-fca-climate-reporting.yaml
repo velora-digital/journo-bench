@@ -1,0 +1,24 @@
+name: 2026-06-fca-climate-reporting
+seed: >-
+  The UK's Financial Conduct Authority proposed simpler climate reporting rules
+  for investment products, replacing detailed TCFD product-level disclosures.
+
+event_date: 2026-06-05
+
+# Clean regulator primary (the FCA press release).
+primary_url: https://www.fca.org.uk/news/press-releases/simpler-climate-reporting-rules-could-save-firms-20m-annually
+
+key_facts:
+  - "The proposal replaces detailed TCFD product-level reports with simpler, more targeted information for retail investors"
+  - "The FCA estimates the change could save firms around £20 million a year"
+
+supporting_facts:
+  - "The rules apply to asset managers, life insurers and FCA-regulated pension providers"
+  - "The consultation closes on 13 July 2026"
+  - "The announcement is accompanied by a comment from Michelle Beck, the FCA's Director of Wholesale Buy-Side"
+
+source: "the FCA"
+notes: >-
+  Regulator primary that exercises three things at once: a specific figure
+  (£20m), a structural change (replacing product-level TCFD reports), and a
+  verbatim attributed quote — stat fidelity, citation, and quote fidelity.

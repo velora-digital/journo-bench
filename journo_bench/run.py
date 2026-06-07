@@ -21,12 +21,25 @@ import argparse
 import asyncio
 from collections.abc import Awaitable, Callable
 
-from pydantic_evals.dataset import increment_eval_metric
+from pydantic_evals.dataset import _task_run
 
 from .adapters import openai_dr, perplexity, velora
 from .adapters.base import Agent
 from .dataset import load_dataset
 from .scoring import score_report
+
+
+def _record_score(value: float) -> None:
+    """Set the per-case `score` metric.
+
+    Not `increment_eval_metric`: it skips a metric whose value stays 0, which
+    silently drops a 0.0-scoring case from the average (inflating it).
+    `record_metric` sets the value unconditionally, including 0.0 and negatives.
+    """
+    run = _task_run.CURRENT_TASK_RUN.get()
+    if run is not None:
+        run.record_metric("score", value)
+
 
 REGISTRY: dict[str, tuple[Agent, bool]] = {
     "velora": (velora.run, velora.AVAILABLE),
@@ -47,7 +60,7 @@ def _scored(agent: Agent, answers: dict[str, dict]) -> Callable[[str], Awaitable
         res = await score_report(report, answers.get(seed) or {})
         if res is None:
             return {"report": report}
-        increment_eval_metric("score", res.score)
+        _record_score(res.score)
         return {"report": report, "result": res}
 
     return task

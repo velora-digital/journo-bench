@@ -46,20 +46,29 @@ except ImportError:
 
 
 def _norm_url(url: str) -> str:
-    """Host + path, lowercased, scheme/www/query/fragment/trailing-slash stripped."""
+    """Host + path + query, lowercased; scheme/www/fragment/trailing-slash stripped.
+
+    The query is kept because some canonical sources carry the document id there,
+    not in the path (e.g. an official wire release surfaced on an aggregator feed
+    at `.../announce/detail?dockey=...`).
+    """
     parts = urlsplit(url.strip().lower())
     host = parts.netloc.removeprefix("www.")
-    return f"{host}{parts.path.rstrip('/')}"
+    path = parts.path.rstrip("/")
+    query = f"?{parts.query}" if parts.query else ""
+    return f"{host}{path}{query}"
 
 
-def _primary_reached(url: str, report: str) -> bool:
-    """Is the specific primary article declared in the report text?
+def _primary_reached(urls: list[str], report: str) -> bool:
+    """Is any acceptable primary source declared in the report text?
 
-    The normalised target (host+path) is matched as a substring of the
-    lowercased report, so however the report writes the link it still matches,
-    but a bare-domain mention does not.
+    A case may list several canonical URLs for one source (e.g. a press release
+    on the company site AND on the wire it went out on). The normalised target
+    is matched as a substring of the lowercased report, so however the report
+    writes the link it still matches, but a bare-domain mention does not.
     """
-    return _norm_url(url) in report.lower()
+    body = report.lower()
+    return any(_norm_url(u) in body for u in urls)
 
 
 class JudgeVerdict(BaseModel):
@@ -165,20 +174,22 @@ async def _judge_brief(
 
 async def score_report(report: str, expected: dict) -> ScoreResult | None:
     """Composite score in [-2, +3] with its components. None when no answer key."""
-    url = expected.get("primary_url")
+    urls = expected.get("primary_url") or []
     key_facts = expected.get("key_facts") or []
-    if not url and not key_facts:
+    if not urls and not key_facts:
         return None
 
     report = report or ""
-    primary = 1.0 if url and _primary_reached(url, report) else 0.0
+    primary = 1.0 if _primary_reached(urls, report) else 0.0
 
     present, citation = 0.0, 0.0
     has_error, errors = False, []
     present_reason = citation_reason = error_reason = ""
     if key_facts and _JUDGE_AVAILABLE:
         supporting = expected.get("supporting_facts") or []
-        verdict = await _judge_brief(report, key_facts, supporting, expected.get("source"), url)
+        verdict = await _judge_brief(
+            report, key_facts, supporting, expected.get("source"), "; ".join(urls)
+        )
         present = 1.0 if verdict.key_facts_present else 0.0
         citation = present if verdict.cited_to_primary else 0.0
         has_error, errors = verdict.has_factual_error, verdict.errors

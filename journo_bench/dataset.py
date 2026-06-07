@@ -19,11 +19,13 @@ CASES_DIR = Path(__file__).parent / "cases"
 
 def load_case(path: Path) -> Case:
     data = yaml.safe_load(path.read_text())
+    pu = data.get("primary_url")
+    primary_urls = [pu] if isinstance(pu, str) else list(pu or [])
     return Case(
         name=data["name"],
         inputs=data["seed"],
         expected_output={
-            "primary_url": data.get("primary_url"),
+            "primary_url": primary_urls,
             "key_facts": data.get("key_facts") or [],
             "supporting_facts": data.get("supporting_facts") or [],
             "source": data.get("source"),

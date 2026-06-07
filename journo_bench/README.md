@@ -32,7 +32,9 @@ Each case is one YAML file in `cases/`:
 name: 2026-05-28-some-story
 seed: "A ~20-word news item — what a tip actually looks like."
 event_date: 2026-05-28          # must postdate model cutoffs (recency guard)
-primary_url: https://regulator.gov/decisions/123   # the specific document, not the outlet
+primary_url: https://regulator.gov/decisions/123   # the specific document, not the outlet.
+                                                   # may be a LIST when one release is canonical
+                                                   # at several URLs (company site + the wire)
 key_facts:                      # the defining quotes/stats; scored for presence + citation
   - "the key quote or statistic"
   - "the second key fact"
@@ -63,6 +65,13 @@ uv run -m evals_public.journo_research.run --agent velora --case 2026-05-28-some
 
 Adapters are dormant unless their dependency is present: Velora needs this
 repo; `openai_dr` needs `OPENAI_API_KEY`; `perplexity` needs `PERPLEXITY_API_KEY`.
+
+The Velora runner injects the generic `editorial_news` research skills (the
+same guidance the article pipeline uses for news — reach the primary, follow
+the attributed quote — plus the news synthesis template), with `site_id=None`
+so no site-specific skills load. That tests the agent as it ships for news,
+fairly across domains. Without those skills it runs as a stripped researcher
+and primary-reaching collapses, so this matters a lot.
 
 ## Viewing results (Logfire)
 

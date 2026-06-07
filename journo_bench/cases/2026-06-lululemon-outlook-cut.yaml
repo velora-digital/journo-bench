@@ -1,0 +1,32 @@
+name: 2026-06-lululemon-outlook-cut
+seed: >-
+  Lululemon cut its full-year fiscal 2026 outlook after first-quarter results,
+  lowering its revenue and earnings guidance.
+
+event_date: 2026-06-04
+
+# The company's own results release — the story broke via CNBC, but this is the
+# primary. Tests reaching the corporate source over the news re-reporting.
+# A press release is canonical at several URLs (company site + the wire it went
+# out on); any of these counts as reaching the primary, news articles do not.
+primary_url:
+  - https://corporate.lululemon.com/media/press-releases/2026/06-04-2026-210523775
+  - https://markets.ft.com/data/announce/detail?dockey=600-202606041605BIZWIRE_USPRX____20260604_BW071504-1
+
+# Numbers verified against the release. The PRIOR guidance was higher
+# (~$11.35-11.50B revenue, EPS $12.10-12.30), so quoting the old figures as
+# current is a real failure mode the error check should catch.
+key_facts:
+  - "Full-year FY2026 net revenue guidance was lowered to $11.0 billion to $11.15 billion"
+  - "Full-year FY2026 diluted EPS guidance of $10.95 to $11.15"
+  - "First-quarter net revenue of $2.5 billion, up 4%"
+
+supporting_facts:
+  - "Lululemon (lululemon athletica inc.) trades on the Nasdaq under the ticker LULU"
+  - "The figures are first-quarter fiscal 2026 results, for the quarter ended early May 2026"
+
+source: "Lululemon"
+notes: >-
+  Corporate press-release primary. Tests number fidelity on a guidance cut
+  (stale prior-guidance figures are the trap) and citation to the company
+  rather than to CNBC, which broke the story.
