@@ -1,0 +1,40 @@
+name: 2026-05-ivanka-albania-podcast
+seed: >-
+  Ivanka Trump's plans for a large private-island resort in Albania sparked
+  protests in Tirana over a threatened flamingo habitat.
+
+# Recency guard: the podcast video was published 31 May 2026 (postdates cutoffs).
+event_date: 2026-05-31
+
+# YOUTUBE-VIDEO PRIMARY: the news is what she said in the video. CNN/CBS name the
+# show and the Daily Beast links the video, so it is a source outlets point to.
+# Our pipeline routes YouTube to a transcript strategy; the static page does not
+# carry the words.
+primary_url:
+  - https://www.youtube.com/watch?v=VhsiMd9ZFNk
+  - https://youtu.be/VhsiMd9ZFNk
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.cnn.com/2026/06/06/europe/ivanka-trump-kushner-luxury-resort-albania-intl
+  - https://www.cbsnews.com/news/jared-kushner-backed-luxury-resort-stokes-days-of-protests-in-albania/
+
+key_facts:
+  - "Ivanka Trump described the project as an 'unbelievable, beautiful 1,400-hectare private island in the middle of the Mediterranean', plus roughly five miles of beachfront, to be developed into resorts and hotels"
+  - "She called the scale 'almost daunting in its size', saying it would include hotels, resorts and wellness"
+
+# Scored for presence (+1) — the framing she gave.
+secondary_facts:
+  - "She said you cannot impose on a country or culture and must understand it first, placing community at the heart of the project"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "The project, backed by Ivanka and Jared Kushner, centres on Sazan, a former military island, and a beachfront area home to flamingos"
+  - "The plans sparked street protests in Tirana dubbed the 'Flamingo Revolution'"
+
+source: "the David Senra podcast (on YouTube)"
+notes: >-
+  A YouTube-video primary: the news is what Ivanka said on camera. Tests whether
+  the agent traces the story back to the actual David Senra podcast video rather
+  than stopping at the CNN/CBS write-ups, and reports her figures (1,400 hectares,
+  ~5 miles of beachfront) faithfully. Distractor: her earlier 2024 Lex Fridman
+  appearance used "1,400-acre" — the current quotes are from the Senra video.

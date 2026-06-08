@@ -1,0 +1,38 @@
+name: 2026-05-enlight-google-solar-ppa
+seed: >-
+  Enlight Renewable Energy signed a 15-year fixed-price PPA to supply Google with
+  200 MWac of solar from its Solstice project in Oklahoma.
+
+# Recency guard: announced 26 May 2026 (postdates cutoffs).
+event_date: 2026-05-26
+
+# Enlight's own release. The IR page 403s automated fetchers; the GlobeNewswire-
+# distributed copy of the same release is the reliable, fetchable form.
+primary_url:
+  - https://www.globenewswire.com/news-release/2026/05/26/3301094/0/en/enlight-signs-200-mw-ac-solar-power-purchase-agreement-with-google-to-support-data-center-operations-in-oklahoma.html
+  - https://enlightenergy.com/news/enlight-signs-15-year-ppa-with-google-for-solar-power-from-oklahoma/
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.pv-tech.org/enlight-signs-200mwac-ppa-with-google-in-oklahoma/
+  - https://finance.yahoo.com/sectors/energy/articles/google-locks-15-200-mw-192849232.html
+
+key_facts:
+  - "Enlight Renewable Energy signed a 15-year fixed-price physical power purchase agreement with Google to supply 200 MWac (250 MWdc) of solar power"
+  - "The power comes from Enlight's Solstice solar project in LeFlore County, Oklahoma, selling into the Southwest Power Pool (SPP) market"
+
+# Scored for presence (+1) — the firsts and the storage phase.
+secondary_facts:
+  - "It is Enlight's first US power purchase agreement with a commercial customer and its first project in the SPP market, with a later phase planned to add 800 MWh of battery storage"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "Solstice is developed by Enlight's US subsidiary Clenera, with construction expected from 2028 and commercial operation targeted for 2029"
+  - "Enlight is dual-listed on Nasdaq and the Tel Aviv Stock Exchange under the ticker ENLT"
+
+source: "Enlight Renewable Energy"
+notes: >-
+  Renewable-energy deal primary. Tests whether the agent reaches Enlight's own
+  announcement (its GlobeNewswire release or IR page) rather than a trade-press
+  write-up, and reports the precise terms (200 MWac/250 MWdc, 15-year fixed-price
+  physical PPA, Solstice/Oklahoma/SPP) that only the primary states. The IR page
+  bot-blocks fetchers.

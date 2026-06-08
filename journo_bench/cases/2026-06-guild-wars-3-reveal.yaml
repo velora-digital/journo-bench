@@ -1,0 +1,39 @@
+name: 2026-06-guild-wars-3-reveal
+seed: >-
+  ArenaNet unveiled Guild Wars 3 at Summer Game Fest, the franchise's first new
+  entry since 2012, coming to PC and PlayStation 5 with a beta in 2027.
+
+# Recency guard: revealed 5 June 2026 (postdates cutoffs).
+event_date: 2026-06-05
+
+# ArenaNet's own announcement (developer blog + official press release). Both
+# fetch cleanly.
+primary_url:
+  - https://www.guildwars2.com/en/news/celebrating-the-announcement-of-guild-wars-3/
+  - https://www.prnewswire.com/news-releases/guild-wars-3-modern-evolution-of-the-mmorpg-announced-at-summer-game-fest-for-pc-and-playstation-5-302793119.html
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.pcgamesn.com/guild-wars-3/confirmed-summer-game-fest-2026
+  - https://www.mmorpg.com/news/guild-wars-3-officially-announced-set-1000-years-before-original-gw-coming-to-pc-and-playstation-5-2000138233
+
+key_facts:
+  - "ArenaNet announced Guild Wars 3, the third entry in the Guild Wars MMORPG franchise and the studio's first new game since 2012, at Summer Game Fest on 5 June 2026"
+  - "It is coming to PC (Steam) and PlayStation 5, the first time the Guild Wars series will be on a home console"
+  - "The first beta test is set for fall 2027"
+
+# Scored for presence (+1) — the framing and setting.
+secondary_facts:
+  - "ArenaNet describes it as a 'modern evolution of the MMORPG', set in Orr in the Tyrian region over a thousand years before the original Guild Wars"
+
+# Not scored for presence — incidental facts; must not be contradicted. The last
+# is a tripwire: fall 2027 is the beta, so calling it a release date is an error.
+incidental_facts:
+  - "ArenaNet says it is continuing to develop Guild Wars 2 alongside the new game"
+  - "No release date or pricing was announced; fall 2027 is only the beta window"
+
+source: "ArenaNet"
+notes: >-
+  Game-reveal primary on a hype-heavy announcement. Tests whether the agent reaches
+  ArenaNet's own announcement rather than an outlet write-up, and reports the spine
+  faithfully: the correct platforms (PC + PS5, NOT Xbox), the fall-2027 beta (not a
+  release date), and the "first new game since 2012 / first on console" framing.

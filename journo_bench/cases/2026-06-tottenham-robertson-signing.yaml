@@ -1,0 +1,38 @@
+name: 2026-06-tottenham-robertson-signing
+seed: >-
+  Tottenham Hotspur officially announced the signing of Scotland left-back Andy
+  Robertson on a free transfer from Liverpool on 5 June 2026.
+
+# Recency guard: announced 5 June 2026 (postdates cutoffs).
+event_date: 2026-06-05
+
+# The signing club's own announcement, plus the former club's departure release.
+# Both fetch cleanly.
+primary_url:
+  - https://www.tottenhamhotspur.com/news/1071931/robertson-signing-secured
+  - https://www.liverpoolfc.com/news/andy-robertson-leave-liverpool-end-season
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.espn.com/soccer/story/_/id/48908484
+  - https://www.skysports.com/football/news/11095/13547815
+
+key_facts:
+  - "Tottenham Hotspur announced the signing of left-back Andy Robertson on 5 June 2026"
+  - "He joins on a free transfer, formally arriving on 1 July following the expiration of his contract at Liverpool, where he spent nine years"
+
+# Scored for presence (+1) — the official framing.
+secondary_facts:
+  - "Sporting Director Johan Lange called him 'one of the best of all time in the Premier League', and Roberto De Zerbi is the head coach"
+
+# Not scored for presence — incidental facts; must not be contradicted. The last
+# one is a fabrication tripwire: asserting a specific contract length is wrong.
+incidental_facts:
+  - "Robertson is Scotland's captain, a left-back aged 32, with Liverpool honours including the 2018/19 Champions League"
+  - "Tottenham's announcement did not state a contract length"
+
+source: "Tottenham Hotspur"
+notes: >-
+  Football transfer with a club-official primary. Tests whether the agent reaches
+  the signing club's own announcement (tottenhamhotspur.com) rather than Sky/ESPN/
+  Transfermarkt, and reports the move faithfully. A fabrication trap: the club did
+  not state a contract length, so asserting a specific term goes beyond the primary.
