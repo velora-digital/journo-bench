@@ -23,7 +23,7 @@ from collections.abc import Awaitable, Callable
 
 from pydantic_evals.dataset import _task_run
 
-from .adapters import openai_dr, perplexity, velora
+from .adapters import gemini_deep_research, gemini_grounded, linkup, perplexity, velora
 from .adapters.base import Agent
 from .dataset import load_dataset
 from .scoring import score_report
@@ -43,7 +43,9 @@ def _record_score(value: float) -> None:
 
 REGISTRY: dict[str, tuple[Agent, bool]] = {
     "velora": (velora.run, velora.AVAILABLE),
-    "openai_dr": (openai_dr.run, openai_dr.AVAILABLE),
+    "gemini_deep_research": (gemini_deep_research.run, gemini_deep_research.AVAILABLE),
+    "gemini_grounded": (gemini_grounded.run, gemini_grounded.AVAILABLE),
+    "linkup": (linkup.run, linkup.AVAILABLE),
     "perplexity": (perplexity.run, perplexity.AVAILABLE),
 }
 
