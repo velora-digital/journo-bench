@@ -2,27 +2,37 @@
 
 A small, reproducible benchmark for what a newsroom actually needs from a
 research agent — not generic "deep research" quality, but whether the output
-is publishable. Each case gets **one composite score**, in `[-2, +3]`:
+is publishable. Each case gets **one composite score**, in `[-2, +4]`:
 
 ```
-score = primary_reached + key_facts_present + citation - 2 × factual_error
+score = primary_reached + key_facts_present + secondary_facts_present
+        + citation - 2 × factual_error
 ```
-Each check is 0 or 1; the composite ranges -2 to +3.
+Each check is 0 or 1; the composite ranges -2 to +4.
 
 - **primary_reached** — is the *specific* primary article declared in the
   agent's report (the canonical origin, not a secondary aggregator)?
   Deterministic substring match on the report text.
 - **key_facts_present** — did the defining quotes/stats surface, in any form?
-  (A faithful translation or paraphrase counts.)
-- **citation** — are those facts *cited to the primary source*? The laundering
-  check: found the fact but credited a secondary outlet counts on presence,
-  not here. Tolerant of how the source is named. Only counts if present.
+  (A faithful translation or paraphrase counts.) The spine of the story.
+- **secondary_facts_present** — did the supporting detail a complete article
+  carries also surface? Reaching it shows the agent read the primary, not just
+  the headline. Same leniency as key facts.
+- **citation** — are the *key* facts *cited to the primary source*? The
+  laundering check: found the fact but credited a secondary outlet counts on
+  presence, not here. Tolerant of how the source is named. Only counts if present.
 - **factual_error (−2)** — did the brief assert anything that contradicts a
-  known fact? "First, do no harm." Fires on key facts *and* supporting facts.
+  known fact? "First, do no harm." Fires on any tier — key, secondary, *and*
+  incidental facts.
 
-The three soft checks are made by a single LLM judge; everything is anchored
+The four soft checks are made by a single LLM judge; everything is anchored
 to a **human-authored answer key**, so the judge compares against fixed ground
 truth rather than judging open-ended quality.
+
+Facts come in three tiers, with distinct roles: **key** (the story doesn't
+exist without them), **secondary** (a desk editor would call the article thin
+without them), and **incidental** (background the story touches but isn't about
+— team, ticker, age; never required, just must not be wrong).
 
 ## How it works
 
@@ -35,10 +45,12 @@ event_date: 2026-05-28          # must postdate model cutoffs (recency guard)
 primary_url: https://regulator.gov/decisions/123   # the specific document, not the outlet.
                                                    # may be a LIST when one release is canonical
                                                    # at several URLs (company site + the wire)
-key_facts:                      # the defining quotes/stats; scored for presence + citation
+key_facts:                      # the spine; scored for presence + citation
   - "the key quote or statistic"
   - "the second key fact"
-supporting_facts:               # NOT required to surface — only a contradiction tripwire
+secondary_facts:                # the flesh; scored for presence (+1)
+  - "supporting detail a complete article carries"
+incidental_facts:               # NOT required to surface — only a contradiction tripwire
   - "a changeable fact the agent could get wrong (team name, age, placing)"
 source: "the primary outlet the key facts should be cited to"   # tolerant of naming
 notes: "why this case exists / what it tests"
@@ -47,9 +59,10 @@ notes: "why this case exists / what it tests"
 The ~20-word **seed** forces real research instead of rewarding whoever got
 the richest prompt, and mirrors how a story actually arrives.
 
-`supporting_facts` are the trap: things an agent can easily get wrong (stale
+`incidental_facts` are the trap: things an agent can easily get wrong (stale
 team names, ages, prior placings). The brief isn't expected to mention them,
-but contradicting one costs the −2.
+but contradicting one costs the −2. Keep each tier tight (2–3 facts), so each
+binary check stays a clean yes/no.
 
 Every agent is a thin **runner** (`adapters/`) that returns its report as a
 string. We score that report and only that report — including the sources the
@@ -64,7 +77,8 @@ uv run -m evals_public.journo_research.run --agent velora --case 2026-05-28-some
 ```
 
 Adapters are dormant unless their dependency is present: Velora needs this
-repo; `openai_dr` needs `OPENAI_API_KEY`; `perplexity` needs `PERPLEXITY_API_KEY`.
+repo; `gemini_deep_research` / `gemini_grounded` need `GOOGLE_API_KEY`;
+`linkup` needs `LINKUP_API_KEY`; `perplexity` needs `PERPLEXITY_API_KEY`.
 
 The Velora runner injects the generic `editorial_news` research skills (the
 same guidance the article pipeline uses for news — reach the primary, follow
@@ -82,9 +96,9 @@ surfaced two ways from the one judge call:
   `AVG METRIC` column — recorded as a metric, because the list only surfaces
   pass-rate and metrics.
 - **Run detail** (per case) shows the breakdown via a `Diagnostics` evaluator:
-  all four checks (`primary_reached`, `key_facts_present`, `citation`,
-  `no_factual_error`) as pass/fail assertions, with the judge's reasoning on
-  `citation` and the flagged claim on `no_factual_error`. This is where you see
+  all five checks (`primary_reached`, `key_facts_present`,
+  `secondary_facts_present`, `citation`, `no_factual_error`) as pass/fail
+  assertions, each with the judge's one-sentence reason. This is where you see
   *what* failed and *why*.
 
 A self-contained static scorecard (for publishing, where a Logfire link won't

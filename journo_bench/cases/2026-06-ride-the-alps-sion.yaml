@@ -14,10 +14,15 @@ key_facts:
   - "A three-day Ride the Alps weekend runs 26-28 June 2026 in the Valais, around Sion"
   - "The three days are the Sanetsch (26 June), Moiry (27 June) and Tseuzier (28 June) climbs"
 
-supporting_facts:
-  - "Sion is in the Valais canton of Switzerland"
+# Scored for presence (+1) — the format and access details a complete listing
+# carries (and that require reading the organiser's own page).
+secondary_facts:
   - "Riders can take part in a single day or the full three-day sequence"
   - "Participation is free, with the climbs closed to motor traffic"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "Sion is in the Valais canton of Switzerland"
 
 source: "Ride the Alps"
 notes: >-

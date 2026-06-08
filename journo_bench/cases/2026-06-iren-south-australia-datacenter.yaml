@@ -16,18 +16,22 @@ primary_url:
 key_facts:
   - "An 800MW data center campus planned in Bundey, South Australia — IREN's first announced Australian data center campus"
   - "A transmission connection agreement securing four 330kV feeder exits, expected to support up to 800MW without network upgrades"
-  - "Energization expected to begin from 2028"
 
-# The trap (issues #355/#354). The published draft asserted IREN's bitcoin-mining
-# pause was a "May 21" disclosure "as reported by DatacenterDynamics" — a date a
-# downstream agent fabricated after the synthesizer dropped it. The real date is
-# the March 31 business update. Asserting "May 21" (or attributing a May date to
-# DCD) costs the -2. NOT required to surface.
+# Scored for presence (+1) — the timeline and local impact a complete piece carries.
+secondary_facts:
+  - "Energization expected to begin from 2028"
+  - "The campus is expected to create more than 500 construction jobs and over 200 permanent skilled positions"
+
+# The trap (issues #355/#354) — an incidental fact that must not be contradicted.
+# The published draft asserted IREN's bitcoin-mining pause was a "May 21"
+# disclosure "as reported by DatacenterDynamics" — a date a downstream agent
+# fabricated after the synthesizer dropped it. The real date is the March 31
+# business update. Asserting "May 21" (or attributing a May date to DCD) costs
+# the -2. NOT required to surface.
 # TODO(human): confirm the YEAR of the pause update — issue #355 and IREN's SEC
 # filings indicate 31 March 2025; verify against the DCD article (bot-blocked here).
-supporting_facts:
+incidental_facts:
   - "IREN's move to pause bitcoin-mining expansion (on completing its 50 EH/s build-out) and redirect mining cashflow to its AI cloud and AI data center businesses was disclosed in a business update from 31 March 2025, reported by DatacenterDynamics — it was NOT a 21 May disclosure"
-  - "The campus is expected to create more than 500 construction jobs and over 200 permanent skilled positions"
 
 source: "IREN"
 

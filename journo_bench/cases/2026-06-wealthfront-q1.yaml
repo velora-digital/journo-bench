@@ -13,10 +13,15 @@ key_facts:
   - "Record Total Platform Assets of $96.6 billion, up 19% year over year"
   - 'Quote from CEO David Fortunato: "We ended the quarter with record Total Platform Assets of $96.6 billion despite a dynamic macroeconomic environment."'
 
-supporting_facts:
+# Scored for presence (+1) — the buyback, the detail that shows the agent read
+# the release rather than just the headline numbers.
+secondary_facts:
+  - "The company ran its inaugural share repurchase program, buying back over 3 million shares at an average price of $8.66"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
   - "Wealthfront trades on the Nasdaq under the ticker WLTH"
   - "The quarter ended April 30, 2026"
-  - "The company ran its inaugural share repurchase program, buying back over 3 million shares at an average price of $8.66"
 
 source: "Wealthfront"
 notes: >-

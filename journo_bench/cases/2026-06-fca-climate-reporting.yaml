@@ -12,9 +12,13 @@ key_facts:
   - "The proposal replaces detailed TCFD product-level reports with simpler, more targeted information for retail investors"
   - "The FCA estimates the change could save firms around £20 million a year"
 
-supporting_facts:
+# Scored for presence (+1) — the scope and timeline a complete piece carries.
+secondary_facts:
   - "The rules apply to asset managers, life insurers and FCA-regulated pension providers"
   - "The consultation closes on 13 July 2026"
+
+# Not scored for presence — incidental detail; must not be misattributed.
+incidental_facts:
   - "The announcement is accompanied by a comment from Michelle Beck, the FCA's Director of Wholesale Buy-Side"
 
 source: "the FCA"

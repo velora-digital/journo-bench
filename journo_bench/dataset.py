@@ -27,7 +27,8 @@ def load_case(path: Path) -> Case:
         expected_output={
             "primary_url": primary_urls,
             "key_facts": data.get("key_facts") or [],
-            "supporting_facts": data.get("supporting_facts") or [],
+            "secondary_facts": data.get("secondary_facts") or [],
+            "incidental_facts": data.get("incidental_facts") or [],
             "source": data.get("source"),
         },
         metadata={

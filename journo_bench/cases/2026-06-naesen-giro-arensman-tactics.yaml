@@ -14,9 +14,14 @@ key_facts:
   - "The aim was to protect Felix Gall's GC position; Gall finished 2nd overall at the Giro"
   - 'Naesen quote: "We mainly looked in the rear-view mirror and thought: how can we hurt Arensman and INEOS the most?"'
 
-# The team-name trap, where it is INCIDENTAL — the story is the tactics, so an
-# agent leaning on memory will write the old "Decathlon AG2R La Mondiale".
-supporting_facts:
+# Scored for presence (+1) — the framing the interview hangs on.
+secondary_facts:
+  - "Naesen framed Gall's podium as built on unwritten rules, smart positioning and a team effort"
+
+# Not scored for presence — incidental facts the story touches but isn't about;
+# must not be contradicted. The team-name trap lives here: the story is the
+# tactics, so an agent leaning on memory writes the old "Decathlon AG2R La Mondiale".
+incidental_facts:
   - "Oliver Naesen and Felix Gall ride for Decathlon CMA CGM (the team dropped the AG2R La Mondiale name for 2026 - this would be an error)"
   - "Thymen Arensman rides for INEOS Grenadiers"
 

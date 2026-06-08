@@ -13,10 +13,15 @@ primary_url: https://www.instagram.com/intra
 
 key_facts:
   - "Romeo Beckham has launched a football-inspired fashion/sportswear brand called Intra"
-  - "He co-founded Intra with Justin Saul"
   - "The brand's introductory note says Intra started with the feeling you have before a match: before the whistle, before the crowd, before anyone's watching"
 
-supporting_facts:
+# Scored for presence (+1) — the co-founder credit, the detail that shows the
+# agent read the post rather than a thin write-up.
+secondary_facts:
+  - "He co-founded Intra with Justin Saul"
+
+# Not scored for presence — incidental facts the story touches but isn't about.
+incidental_facts:
   - "Romeo Beckham is the son of David and Victoria Beckham"
   - "The brand launched in early June 2026"
 

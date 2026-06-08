@@ -14,17 +14,23 @@ event_date: 2026-04-30
 primary_url: https://as.com/ciclismo/mas_ciclismo/van-der-poel-formo-parte-de-la-generacion-que-cambio-el-ciclismo-f202604-n/
 
 # Check 2 — key facts in the native Spanish (the judge credits a faithful
-# translation or paraphrase, not only verbatim wording).
+# translation or paraphrase). The two claims that ARE the story: the Tour
+# confirmation and the one MTB wish.
 key_facts:
   - "Estamos preparando el programa hacia el Tour de Francia, en el que sí que estaré"
   - "El Mundial de mountain bike en Val di Sole. Si puedo solo elegir una, sería esa"
-  - "Nadie hizo antes el ganar en todas las disciplinas (carretera, ciclocross y gravel, le falta mountain bike), por lo que sería una victoria histórica"
 
-# Not scored for presence — contradiction tripwires for the error check.
-supporting_facts:
+# Scored for presence (+1) — the depth a complete piece carries: why the MTB
+# title would matter.
+secondary_facts:
+  - "Nadie hizo antes el ganar en todas las disciplinas (carretera, ciclocross y gravel, le falta mountain bike), por lo que sería una victoria histórica"
+  - "He is already world champion on the road, in cyclocross and in gravel; cross-country mountain bike is the discipline he has not yet won"
+
+# Not scored for presence — incidental background the story touches but isn't
+# about; must not be contradicted (age, other-event dates, the staleness trap).
+incidental_facts:
   - "Van der Poel was 31 at the time of the interview"
   - "The 2026 Tour de France starts on 4 July in Barcelona"
-  - "He is already world champion on the road, in cyclocross and in gravel; mountain bike (cross-country) is the discipline he has not won"
   - "His spring 2026 results included wins at the Omloop and the E3 Saxo Classic, 2nd at the Tour of Flanders and 4th at Paris-Roubaix"
   - "The Val di Sole MTB World Championships are held in late August 2026"
   - "The AS interview was published on 30 April 2026 — weeks before, and unrelated to, the 21 May Nove Mesto World Cup startlist mix-up that later went viral"

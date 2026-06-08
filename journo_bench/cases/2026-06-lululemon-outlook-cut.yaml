@@ -19,9 +19,14 @@ primary_url:
 key_facts:
   - "Full-year FY2026 net revenue guidance was lowered to $11.0 billion to $11.15 billion"
   - "Full-year FY2026 diluted EPS guidance of $10.95 to $11.15"
+
+# Scored for presence (+1) — the Q1 result that prompted the cut (the context,
+# not the headline). Demoted from key.
+secondary_facts:
   - "First-quarter net revenue of $2.5 billion, up 4%"
 
-supporting_facts:
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
   - "Lululemon (lululemon athletica inc.) trades on the Nasdaq under the ticker LULU"
   - "The figures are first-quarter fiscal 2026 results, for the quarter ended early May 2026"
 
