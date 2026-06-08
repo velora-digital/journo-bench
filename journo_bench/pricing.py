@@ -18,11 +18,14 @@ Each rate lives in one constant so a vendor price change is a one-line edit.
 
 from __future__ import annotations
 
-# --- Gemini 3.1 Pro, grounded generation. $/1M tokens, prompt <=200k -----------
-_GEMINI_PRO_IN = 2.00
-_GEMINI_PRO_OUT = 12.00  # thinking tokens are billed at the output rate, already
-_GEMINI_PRO_CACHED = 0.20  # included in the output count — do not add separately
-_GEMINI_GROUNDING_PER_QUERY = 14.00 / 1_000  # $14 / 1k Google Search queries
+# --- Gemini grounded generation. $/1M tokens (input, output, cached) per model --
+# Thinking tokens bill at the output rate and are already in the output count;
+# cached tokens are part of the input count, billed at the cached rate.
+_GROUNDED_RATES: dict[str, tuple[float, float, float]] = {
+    "gemini-3.1-pro-preview": (2.00, 12.00, 0.20),
+    "gemini-3.5-flash": (1.50, 9.00, 0.15),
+}
+_GEMINI_GROUNDING_PER_QUERY = 14.00 / 1_000  # $14 / 1k Google Search queries, both
 
 
 def gemini_grounded_cost(
@@ -30,6 +33,7 @@ def gemini_grounded_cost(
     output_tokens: int,
     cached_tokens: int,
     search_queries: int,
+    model: str = "gemini-3.1-pro-preview",
 ) -> float:
     """One grounded `generate_content` call: tokens + per-search grounding fee.
 
@@ -38,11 +42,10 @@ def gemini_grounded_cost(
     cached rate. `search_queries` = len(web_search_queries) with empty strings
     filtered out (the API returns blanks that would otherwise over-bill).
     """
+    in_rate, out_rate, cached_rate = _GROUNDED_RATES[model]
     billable_input = max(input_tokens - cached_tokens, 0)
     token_cost = (
-        billable_input * _GEMINI_PRO_IN
-        + cached_tokens * _GEMINI_PRO_CACHED
-        + output_tokens * _GEMINI_PRO_OUT
+        billable_input * in_rate + cached_tokens * cached_rate + output_tokens * out_rate
     ) / 1_000_000
     return token_cost + search_queries * _GEMINI_GROUNDING_PER_QUERY
 

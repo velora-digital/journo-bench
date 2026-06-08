@@ -1,8 +1,12 @@
-"""Perplexity Sonar Deep Research runner.
+"""Perplexity Sonar runners — two tiers as separate entries.
 
-Dormant without PERPLEXITY_API_KEY. Returns the report text with its declared
-sources appended, so report-text scoring sees the URLs Perplexity cited.
-Verify the response shape against the live API before publishing a run.
+`run_pro` uses sonar-pro (the flagship grounded model, peer to Gemini Grounded);
+`run_deep_research` uses sonar-deep-research (the agentic multi-step model, peer
+to Gemini Deep Research, slow and pricey). Both share one core.
+
+Dormant without PERPLEXITY_API_KEY. The report keeps Perplexity's inline [n]
+markers and appends a numbered source list that matches them, so each cited
+claim stays traceable. Cost comes from the API's own usage.cost.total_cost.
 """
 
 from __future__ import annotations
@@ -15,16 +19,15 @@ from ._task import TASK_INSTRUCTION
 
 AVAILABLE = bool(os.getenv("PERPLEXITY_API_KEY"))
 
-MODEL = "sonar-deep-research"
 BASE_URL = "https://api.perplexity.ai"
 
 
-async def run(seed: str) -> str:
+async def _run(model: str, seed: str) -> str:
     import httpx
 
     headers = {"Authorization": f"Bearer {os.environ['PERPLEXITY_API_KEY']}"}
     payload = {
-        "model": MODEL,
+        "model": model,
         "messages": [
             {"role": "system", "content": TASK_INSTRUCTION},
             {"role": "user", "content": seed},
@@ -40,7 +43,20 @@ async def run(seed: str) -> str:
         record_metric("cost_usd", perplexity_cost(usage))
 
     report = data["choices"][0]["message"]["content"]
-    urls = data.get("citations", []) or []
+    # Perplexity inlines [n] markers in the content; number the sources to match
+    # so each cited claim stays traceable. Newer API returns search_results;
+    # older returns a flat citations list.
+    results = data.get("search_results") or []
+    urls = [r.get("url") for r in results if r.get("url")] or (data.get("citations") or [])
+    if not urls:
+        return report
+    sources = "\n".join(f"[{i}] {u}" for i, u in enumerate(urls, 1))
+    return f"{report}\n\nSources:\n{sources}"
 
-    sources = "\n".join(f"- {u}" for u in urls)
-    return f"{report}\n\nSources:\n{sources}" if sources else report
+
+async def run_pro(seed: str) -> str:
+    return await _run("sonar-pro", seed)
+
+
+async def run_deep_research(seed: str) -> str:
+    return await _run("sonar-deep-research", seed)

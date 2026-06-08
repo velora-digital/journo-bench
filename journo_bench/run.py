@@ -22,7 +22,9 @@ from __future__ import annotations
 import argparse
 import asyncio
 from collections.abc import Awaitable, Callable
+from datetime import UTC, datetime
 
+from . import export
 from .adapters import gemini_deep_research, gemini_grounded, linkup, perplexity, velora
 from .adapters.base import Agent
 from .dataset import load_dataset
@@ -32,9 +34,30 @@ from .scoring import score_report
 REGISTRY: dict[str, tuple[Agent, bool]] = {
     "velora": (velora.run, velora.AVAILABLE),
     "gemini_deep_research": (gemini_deep_research.run, gemini_deep_research.AVAILABLE),
-    "gemini_grounded": (gemini_grounded.run, gemini_grounded.AVAILABLE),
+    "gemini_grounded_pro": (gemini_grounded.run_pro, gemini_grounded.AVAILABLE),
+    "gemini_grounded_flash": (gemini_grounded.run_flash, gemini_grounded.AVAILABLE),
     "linkup": (linkup.run, linkup.AVAILABLE),
-    "perplexity": (perplexity.run, perplexity.AVAILABLE),
+    "perplexity_pro": (perplexity.run_pro, perplexity.AVAILABLE),
+    "perplexity_deep_research": (perplexity.run_deep_research, perplexity.AVAILABLE),
+}
+
+# Model label recorded with each result row, so a later re-run is a new, pinned
+# measurement rather than a silent overwrite.
+MODELS: dict[str, str] = {
+    "velora": "velora-research",
+    "gemini_deep_research": gemini_deep_research.AGENT,
+    "gemini_grounded_pro": gemini_grounded.MODEL_PRO,
+    "gemini_grounded_flash": gemini_grounded.MODEL_FLASH,
+    "linkup": f"linkup-{linkup.DEPTH}-{linkup.OUTPUT_TYPE}",
+    "perplexity_pro": "sonar-pro",
+    "perplexity_deep_research": "sonar-deep-research",
+}
+
+# The agentic deep-research tiers are slow and rate-limited; cap their fan-out so
+# 30 cases do not all run at once. Others run unbounded.
+CONCURRENCY: dict[str, int] = {
+    "gemini_deep_research": 4,
+    "perplexity_deep_research": 4,
 }
 
 
@@ -56,11 +79,19 @@ def _scored(agent: Agent, answers: dict[str, dict]) -> Callable[[str], Awaitable
     return task
 
 
-async def _bootstrap_for_velora() -> None:
-    from src.core.observability import configure_logfire
+def _configure_logfire() -> None:
+    """Configure Logfire for every run when the Velora repo is importable; a
+    standalone run (no `src/`) skips it. The results file does not depend on it."""
+    try:
+        from src.core.observability import configure_logfire
+    except ImportError:
+        return
+    configure_logfire("velora-journo-eval")
+
+
+async def _init_velora_pool() -> None:
     from src.core.services import factory
 
-    configure_logfire("velora-journo-eval")
     await factory.data.get_neon_connection().init_pool()
 
 
@@ -79,16 +110,24 @@ async def main(agent: str, case_filter: str | None) -> None:
         print("No available agents to run.")
         return
 
+    _configure_logfire()
     if "velora" in selected:
-        await _bootstrap_for_velora()
+        await _init_velora_pool()
 
     dataset = load_dataset(case_filter)
     answers = {c.inputs: c.expected_output for c in dataset.cases}
 
+    run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    run_at = datetime.now(UTC).isoformat()
+
     for name, adapter in selected.items():
         print(f"\n{'#' * 70}\n# {name}\n{'#' * 70}")
-        report = await dataset.evaluate(_scored(adapter, answers), name=name)
+        report = await dataset.evaluate(
+            _scored(adapter, answers), name=name, max_concurrency=CONCURRENCY.get(name)
+        )
         report.print(include_input=False, include_output=False)
+        n = export.append_results(run_id, run_at, name, MODELS.get(name, name), report)
+        print(f"  wrote {n} rows to {export.RESULTS}")
 
 
 if __name__ == "__main__":

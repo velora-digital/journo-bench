@@ -33,9 +33,12 @@ def _key() -> str:
 async def run(seed: str) -> str:
     from google import genai
 
+    # The deep-research agent has no system_instruction channel, so the shared
+    # task framing goes into the input ahead of the seed — same words every other
+    # provider gets, as with Linkup.
     client = genai.Client(api_key=_key())
     interaction = await client.aio.interactions.create(
-        agent=AGENT, input=seed, system_instruction=TASK_INSTRUCTION, background=True
+        agent=AGENT, input=f"{TASK_INSTRUCTION}\n\n{seed}", background=True
     )
 
     waited = 0
@@ -43,7 +46,7 @@ async def run(seed: str) -> str:
         result = await client.aio.interactions.get(interaction.id)
         if result.status == "completed":
             _record_cost(result)
-            return result.output_text or ""
+            return _report_text(result)
         if result.status == "failed":
             return ""
         await asyncio.sleep(POLL_S)
@@ -51,16 +54,59 @@ async def run(seed: str) -> str:
     return ""
 
 
+def _report_text(result) -> str:
+    """Render the text blocks in `outputs` with their URLCitation annotations
+    inlined as [n] markers tied to a numbered source list, so each cited claim is
+    traceable to its source. Annotation indices are byte offsets into the block."""
+    blocks = [
+        c for c in (result.outputs or []) if getattr(c, "type", None) == "text" and (c.text or "")
+    ]
+
+    def _anns(content) -> list:
+        return [
+            a
+            for a in (getattr(content, "annotations", None) or [])
+            if getattr(a, "type", None) == "url_citation"
+            and getattr(a, "url", None)
+            and getattr(a, "end_index", None) is not None
+        ]
+
+    num_of_url: dict[str, int] = {}
+    numbered: list[str] = []
+    for content in blocks:  # reading order assigns source numbers
+        for a in sorted(_anns(content), key=lambda a: (a.end_index, a.start_index or 0)):
+            if a.url not in num_of_url:
+                num_of_url[a.url] = len(numbered) + 1
+                numbered.append(a.url)
+
+    parts: list[str] = []
+    for content in blocks:
+        data = content.text.encode("utf-8")
+        for a in sorted(_anns(content), key=lambda a: a.end_index, reverse=True):
+            marker = f"[{num_of_url[a.url]}]".encode()
+            data = data[: a.end_index] + marker + data[a.end_index :]
+        parts.append(data.decode("utf-8", errors="ignore"))
+
+    report = "\n".join(parts)
+    if numbered:
+        report += "\n\nSources:\n" + "\n".join(f"[{n}] {u}" for n, u in enumerate(numbered, 1))
+    return report
+
+
 def _record_cost(result) -> None:
     u = getattr(result, "usage", None)
     if u is None:
         return
+    # grounding_tool_count is a list of per-tool counts, not a scalar.
+    searches = sum(
+        (getattr(g, "count", 0) or 0) for g in (getattr(u, "grounding_tool_count", None) or [])
+    )
     record_metric(
         "cost_usd",
         gemini_deep_research_cost(
             input_tokens=getattr(u, "total_input_tokens", 0) or 0,
             output_tokens=getattr(u, "total_output_tokens", 0) or 0,
             cached_tokens=getattr(u, "total_cached_tokens", 0) or 0,
-            search_queries=getattr(u, "grounding_tool_count", 0) or 0,
+            search_queries=searches,
         ),
     )
