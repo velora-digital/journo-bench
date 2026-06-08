@@ -19,8 +19,9 @@ Each rate lives in one constant so a vendor price change is a one-line edit.
 from __future__ import annotations
 
 # --- Gemini grounded generation. $/1M tokens (input, output, cached) per model --
-# Thinking tokens bill at the output rate and are already in the output count;
-# cached tokens are part of the input count, billed at the cached rate.
+# Thinking tokens bill at the output rate but are reported separately from
+# candidates_token_count, so the adapter folds thoughts into output_tokens before
+# pricing. Cached tokens are part of the input count, billed at the cached rate.
 _GROUNDED_RATES: dict[str, tuple[float, float, float]] = {
     "gemini-3.1-pro-preview": (2.00, 12.00, 0.20),
     "gemini-3.5-flash": (1.50, 9.00, 0.15),
@@ -70,8 +71,9 @@ def gemini_deep_research_cost(
     """A whole Deep Research interaction: summed loop tokens + grounding fee.
 
     Reads `interaction.usage`: total_input_tokens / total_output_tokens /
-    total_cached_tokens / grounding_tool_count. Thought tokens are already in the
-    output total. Grounding uses the same $14/1k rate as grounded generation.
+    total_cached_tokens / grounding_tool_count. total_thought_tokens is reported
+    separately and bills at the output rate, so the adapter folds it into
+    output_tokens. Grounding uses the same $14/1k rate as grounded generation.
     """
     billable_input = max(input_tokens - cached_tokens, 0)
     token_cost = (

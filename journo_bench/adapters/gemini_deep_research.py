@@ -101,11 +101,16 @@ def _record_cost(result) -> None:
     searches = sum(
         (getattr(g, "count", 0) or 0) for g in (getattr(u, "grounding_tool_count", None) or [])
     )
+    # total_thought_tokens is separate from total_output_tokens and bills at the
+    # output rate, so fold it in.
+    output_tokens = (getattr(u, "total_output_tokens", 0) or 0) + (
+        getattr(u, "total_thought_tokens", 0) or 0
+    )
     record_metric(
         "cost_usd",
         gemini_deep_research_cost(
             input_tokens=getattr(u, "total_input_tokens", 0) or 0,
-            output_tokens=getattr(u, "total_output_tokens", 0) or 0,
+            output_tokens=output_tokens,
             cached_tokens=getattr(u, "total_cached_tokens", 0) or 0,
             search_queries=searches,
         ),

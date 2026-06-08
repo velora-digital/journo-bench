@@ -62,11 +62,14 @@ def _record_cost(resp, model: str) -> None:
     gm = getattr(cand, "grounding_metadata", None)
     queries = getattr(gm, "web_search_queries", None) or []
     n_queries = len([q for q in queries if q])  # API returns empty strings; drop them
+    # thoughts_token_count is separate from candidates_token_count and bills at
+    # the output rate, so fold it into output or dynamic thinking is free here.
+    output_tokens = (um.candidates_token_count or 0) + (getattr(um, "thoughts_token_count", 0) or 0)
     record_metric(
         "cost_usd",
         gemini_grounded_cost(
             input_tokens=um.prompt_token_count or 0,
-            output_tokens=um.candidates_token_count or 0,
+            output_tokens=output_tokens,
             cached_tokens=getattr(um, "cached_content_token_count", 0) or 0,
             search_queries=n_queries,
             model=model,
