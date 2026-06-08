@@ -55,13 +55,13 @@ Existing benchmarks reward the brief that reads well. They do not check whether 
 
 ## What this measures, and what it does not
 
-The benchmark scores whether an agent reaches the primary source for a news tip and reports its facts faithfully. It does not score writing quality or speed. It does not test multi-turn editing or long-form features, and it reads a foreign-language primary without judging wider non-English fluency. The cases probe across domains rather than covering any single beat in depth. A high score means an agent sources well on short news tips. It says nothing about the rest of the work a newsroom needs.
+The benchmark scores whether an agent reaches the primary source for a news event and reports its facts faithfully. It does not score writing quality or speed. It does not test multi-turn editing or long-form features, and it reads a foreign-language primary without judging wider non-English fluency. The cases probe across domains rather than covering any single beat in depth. A high score means an agent sources well from a short seed. It says nothing about the rest of the work a newsroom needs.
 
 # The benchmark
 
 ## A case
 
-Each case is a news tip of around twenty words, the length a real tip arrives at, paired with a human-authored answer key. The tip names an event and little else, so reaching the facts takes research rather than a reading of the prompt.
+Each case is a seed of around twenty words, the length a real assignment arrives at, paired with a human-authored answer key. The seed names an event and little else, so reaching the facts takes research rather than a reading of the prompt.
 
 [[DATA: one example case rendered inline: seed plus its key]]
 
@@ -90,7 +90,7 @@ score = primary_reached + key_facts_present + secondary_facts_present
         + citation − 2 × factual_error
 ```
 
-`primary_reached` runs in code. It looks for the designated primary source in the text the agent returns.
+`primary_reached` asks whether the agent reached the designated primary source. A judge decides it, grounded by a code check that matches the primary's URL against the report, so a different official URL of the same source still counts and a fact lifted from a write-up that never reached the primary does not.
 
 `key_facts_present` and `secondary_facts_present` are judged against the fixed key. A faithful translation or a paraphrase counts.
 
@@ -104,21 +104,21 @@ The score reads only the report the agent returns, with the sources declared ins
 
 ## What we tested
 
-We ran five research products. Some are multi-step agents that browse and write a report. Others return a sourced answer from a single pass. Each agent received the same task, to research a news tip and produce a brief that reaches and cites the primary source, and each otherwise ran as it ships. We tuned none of them to the cases.
+We ran five research products. Some are multi-step agents that browse and write a report. Others return a sourced answer from a single pass. Each agent received the same task, to research a news event and produce a brief that reaches and cites the primary source, and each otherwise ran as it ships. We tuned none of them to the cases.
 
 [[DATA: provider and model-version table, with run dates pinned]]
 
 ## How it is scored
 
-The soft checks come from one language model judge. The judge compares the brief against the fixed answer key and marks each fact present or absent, so it scores agreement with known facts. Each check is a yes or no. The judge prompt is in the appendix.
+Every check comes from one language model judge. The judge compares the brief against the fixed answer key and marks each one yes or no, so it scores agreement with known facts. The judge prompt is in the appendix.
 
-`primary_reached` runs in code. It normalizes the URL and looks for the designated primary in the report text.
+`primary_reached` is grounded in code before the judge rules. The harness normalizes every listed primary URL and reports whether one appears in the brief, and the judge takes that match as evidence in deciding whether the agent reached the source. The grounding keeps the verdict robust to URL form: an official source cited in a different form still counts, and a fact carried over from a secondary write-up does not.
 
 Research agents vary from run to run. We ran each provider twice over the full set and report both runs. Where two providers' ranges overlap we treat them as level.
 
 ## Sample size
 
-The benchmark runs 30 cases. Every provider answers the same 30, so each comparison measures a within-case difference, and that paired design is what lets a set this size separate providers. Thirty cases spread to five or six per domain, so no single story swings a domain result. The set resolves score gaps of roughly half a point and wider, and reports providers closer than that as level. Thirty is the floor: small enough that every answer key stays human-authored and every primary validated against real coverage, large enough to read as a deliberate test. The set will grow.
+The benchmark runs 30 cases. Every provider answers the same 30, so each comparison measures a within-case difference, and that paired design is what lets a set this size separate providers. The 30 span around twenty domains, from central-bank policy to a game reveal to a road-race result, and the primary often sits in a non-obvious place, so the set tests whether an agent sources well in general rather than on one familiar beat. It resolves score gaps of roughly half a point and wider, and reports providers closer than that as level. Thirty is the floor: small enough that every answer key stays human-authored and every primary validated against real coverage, large enough to read as a deliberate test. The set will grow.
 
 ## How cost is measured
 
@@ -142,12 +142,9 @@ Velora's cost is wholesale, the model tokens and API calls a run consumes. The t
 
 [[DATA: per-dimension stacked bar chart]]
 
-## By domain
+## Breadth, not per-domain ranking
 
-> _Whether an advantage holds across cycling, retail, policy, finance, and
-> consumer launches. State cases-per-domain plainly; the count is small._
-
-[[DATA: score by domain and provider]]
+We do not break the leaderboard down by domain. At one or two cases a domain the per-domain numbers would be noise, and ranking on them would invite a reader to over-read a single case. The spread across roughly twenty domains is a property of the set, listed in full in the appendix, and what it buys is generalisation: a score earned here is not a score on one familiar beat. Where a provider wins or loses on a particular kind of source, the failure-mode section names it from the cases themselves.
 
 ## Quality against cost
 
@@ -173,7 +170,7 @@ Velora's cost is wholesale, the model tokens and API calls a run consumes. The t
 
 # Limitations
 
-The set is 30 cases. It separates providers that differ by a clear margin and leaves closer ones level; it does not support fine rankings or strong per-domain claims at five or six cases a domain.
+The set is 30 cases. It separates providers that differ by a clear margin and leaves closer ones level. The cases spread across roughly twenty domains for breadth, so the set supports no per-domain claims at all: one or two cases a domain is a sample of one or two, and we rank only the overall result.
 
 Research agents are not deterministic. Two runs catch gross variance but not fine differences, so we present close providers as level.
 
