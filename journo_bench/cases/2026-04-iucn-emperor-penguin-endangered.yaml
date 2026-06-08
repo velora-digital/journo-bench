@@ -1,0 +1,38 @@
+name: 2026-04-iucn-emperor-penguin-endangered
+seed: >-
+  An IUCN Red List update reclassified the emperor penguin and Antarctic fur seal
+  as Endangered, blaming climate-driven sea-ice loss in Antarctica.
+
+# Recency guard: the update was announced 9 April 2026 (postdates cutoffs).
+event_date: 2026-04-09
+
+# The IUCN's own press release. The Red List species records (iucnredlist.org)
+# are the canonical records but bot-block fetchers; the iucn.org release is the
+# readable primary.
+primary_url:
+  - https://iucn.org/press-release/202604/emperor-penguin-and-antarctic-fur-seal-now-endangered-due-climate-change-iucn
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.cnn.com/2026/04/09/climate/emperor-penguins-fur-seals-antarctic-endangered
+  - https://www.bas.ac.uk/news/emperor-penguin-and-antarctic-fur-seal-now-endangered-due-to-climate-change-iucn-red-list/
+
+key_facts:
+  - "On 9 April 2026 the IUCN Red List update moved the emperor penguin from Near Threatened to Endangered, driven by projected sea-ice loss from climate change"
+  - "The same update moved the Antarctic fur seal from Least Concern to Endangered, after its population fell by more than 50%"
+
+# Scored for presence (+1) — the other change and the projection a complete piece carries.
+secondary_facts:
+  - "The southern elephant seal moved from Least Concern to Vulnerable in the same update, and the emperor penguin's population is projected to halve by the 2080s"
+
+# Not scored for presence — incidental facts; must not be contradicted. (Note: the
+# green sea turtle downlisting belongs to a separate October 2025 update, not this one.)
+incidental_facts:
+  - "The IUCN Red List ranks species from Least Concern through Near Threatened, Vulnerable, Endangered and Critically Endangered to Extinct"
+  - "The declines are attributed to climate-driven loss of Antarctic sea ice affecting food and breeding habitat"
+
+source: "the IUCN"
+notes: >-
+  Conservation-science primary. Tests whether the agent reaches the IUCN's own
+  April 2026 press release rather than a CNN/Mongabay write-up, reports the exact
+  category moves with the correct date, and does not import the separate October
+  2025 green-turtle downlisting into this update.

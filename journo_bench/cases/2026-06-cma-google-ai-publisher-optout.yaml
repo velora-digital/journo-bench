@@ -1,0 +1,38 @@
+name: 2026-06-cma-google-ai-publisher-optout
+seed: >-
+  On 3 June 2026 the UK's CMA imposed a conduct requirement on Google, giving
+  publishers controls to withhold their content from AI search features.
+
+# Recency guard: imposed 3 June 2026 (postdates cutoffs).
+event_date: 2026-06-03
+
+# The CMA's own gov.uk publication: the press release and the legally operative
+# s.19(1) Notice. The Notice PDF is binary-compressed (extracts via pdftotext).
+primary_url:
+  - https://www.gov.uk/government/news/cma-secures-fairer-deal-for-publishers-and-improves-google-search-services-in-uk
+  - https://assets.publishing.service.gov.uk/media/6a1ec73a59fb7a60f827f64e/Publisher_CR_Notice.pdf
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://techcrunch.com/2026/06/03/publishers-will-be-able-to-opt-out-of-ai-search-thanks-to-new-regulation/
+  - https://techhq.com/news/google-ai-search-regulation-cma-conduct-requirement/
+
+key_facts:
+  - "On 3 June 2026 the CMA imposed a requirement on Google giving publishers effective controls to withhold their content from being used in its generative AI search features and services"
+  - "Google must not penalise publishers for using the controls, for example by downranking their content relative to opted-in content"
+
+# Scored for presence (+1) — the legal mechanism a complete piece carries.
+secondary_facts:
+  - "It is a conduct requirement under the Digital Markets, Competition and Consumers Act 2024, resting on the CMA's October 2025 decision designating Google as having Strategic Market Status, with withholding controls at both directory and page level"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "The generative AI features named include AI Overviews and AI Mode"
+  - "The requirement comes into force six months after the notice, with the page-level control at nine months"
+
+source: "the CMA (Competition and Markets Authority)"
+notes: >-
+  Competition-regulator primary. Tests whether the agent reaches the CMA's own
+  gov.uk publication (the press release and the s.19(1) Notice) rather than the
+  Digiday/TechCrunch write-up, and reports the real mechanism (a DMCC Act conduct
+  requirement built on Google's Strategic Market Status) and the actual obligation
+  (withholding controls plus anti-retaliation), not a vague "opt-out".

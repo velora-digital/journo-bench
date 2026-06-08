@@ -1,0 +1,38 @@
+name: 2026-05-fipr-age-verification-evidence
+seed: >-
+  FIPR told the UK government's Growing Up in the Online World consultation that
+  proposed age-verification rules would worsen online harms and exclude vulnerable users.
+
+# Recency guard: FIPR's response is dated 26 May 2026 (postdates cutoffs).
+event_date: 2026-05-26
+
+# FIPR's own published consultation response (a PDF, readable via pdftotext),
+# plus its homepage listing. Not the Computer Weekly write-up.
+primary_url:
+  - https://fipr.org/20260526-GrowingUpInTheOnlineWorld.pdf
+  - https://fipr.org/
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.computerweekly.com/news/366643835/Age-verification-tech-could-put-children-at-greater-risk-says-think-tank
+  - https://cybernews.com/tech/age-verification-not-a-fix-for-online-harms/
+
+key_facts:
+  - "In its response to the UK government's 'Growing Up in the Online World' consultation, FIPR argued that many proposed age-restriction implementations have limited effect in reducing harm to children while causing significant additional harms, especially to the most vulnerable children and adults"
+  - "FIPR argued that over-reliance on strong technical age-verification intensifies the harms it is meant to prevent, by displacing under-age users to more harmful openly-accessible sites and riskier circumvention"
+
+# Scored for presence (+1) — FIPR's recommended alternative.
+secondary_facts:
+  - "FIPR's recommended alternative is 'tagging and blocking', where sites declare content suitability and parents set limits on the device, modelled on BBFC film ratings"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "FIPR is a research foundation on technology and policy; the response was signed by its Chair Dr Ben Collier and Vice-Chair Dr Monica Horten"
+  - "The consultation relates to age-based restrictions introduced by the Children's Wellbeing and Schools Act 2026, which amends the Online Safety Act"
+
+source: "FIPR (Foundation for Information Policy Research)"
+notes: >-
+  Think-tank evidence with the primary buried in a PDF. Tests whether the agent
+  reaches FIPR's own consultation-response document on fipr.org rather than the
+  Computer Weekly/Cybernews write-ups, and names it correctly as a response to the
+  "Growing Up in the Online World" consultation. Secondary write-ups truncate
+  FIPR's "children and adults" to "adults" — the full wording is the faithful one.

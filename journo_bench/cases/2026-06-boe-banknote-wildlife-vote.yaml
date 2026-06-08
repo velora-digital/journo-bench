@@ -1,0 +1,38 @@
+name: 2026-06-boe-banknote-wildlife-vote
+seed: >-
+  On 3 June 2026 the Bank of England opened a one-month public vote on which
+  native UK wildlife should feature on its next banknote series.
+
+# Recency guard: the consultation opened 3 June 2026 (postdates cutoffs).
+event_date: 2026-06-03
+
+# The Bank of England's own announcement and consultation page. The BoE site
+# bot-blocks fetchers (403), so reaching it is the test.
+primary_url:
+  - https://www.bankofengland.co.uk/news/2026/june/wildlife-new-banknote-series
+  - https://www.bankofengland.co.uk/banknotes/help-us-design-our-next-series-of-banknotes
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.discoverwildlife.com/people/animals-on-uk-banknotes
+  - https://www.nationalworld.com/money/new-look-banknotes-have-your-say-on-animal-designs-from-bank-of-england-shortlist-8655085
+
+key_facts:
+  - "On 3 June 2026 the Bank of England opened a public consultation asking which native UK wildlife should be the central image on its next series of banknotes, running until 3 July 2026"
+  - "The vote covers the £5, £10, £20 and £50 notes, with Governor Andrew Bailey making the final decision and the outcome announced by the end of 2026"
+
+# Scored for presence (+1) — the mechanics a complete piece carries.
+secondary_facts:
+  - "A shortlist of 18 species, drawn up with wildlife experts, is grouped into three categories (mammals; birds; and amphibians, insects and fish), and the public can choose up to two from each"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "The nature theme had been chosen via an earlier consultation confirmed in March 2026, and the monarch's portrait remains on the front of every note"
+  - "The current notes feature historical figures: Churchill (£5), Austen (£10), Turner (£20) and Turing (£50)"
+
+source: "the Bank of England"
+notes: >-
+  Central-bank primary on a quirky story. Tests whether the agent reaches the
+  Bank of England's own announcement/consultation page rather than a wildlife
+  write-up, and reports the mechanics faithfully (the 3 June to 3 July window,
+  the four denominations, the shortlist vote, and that the Governor makes the
+  final call). The BoE site bot-blocks fetchers.
