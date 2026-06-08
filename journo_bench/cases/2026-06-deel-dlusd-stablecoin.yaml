@@ -1,0 +1,40 @@
+name: 2026-06-deel-dlusd-stablecoin
+seed: >-
+  Deel launched its DLUSD stablecoin wallet, a USD-denominated balance for
+  contractors built on Stripe's stack, starting with early access in Argentina.
+
+# Recency guard: announced 3 June 2026 (postdates cutoffs).
+event_date: 2026-06-03
+
+# Deel's own product announcement, plus Stripe's newsroom as a co-primary: the
+# partner-stack detail (Bridge/Privy/Tempo) is only on Stripe's page, since Deel's
+# own post names only "licensed third-party partners".
+primary_url:
+  - https://www.deel.com/blog/introducing-stablecoin-wallet/
+  - https://stripe.com/newsroom/news/deel-and-stripe
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.ccn.com/news/crypto/stablecoins-global-payroll-deel-yield-bearing-dlusd-wallet/
+  - https://finance.yahoo.com/markets/crypto/articles/deel-launches-dlusd-pay-workers-060149026.html
+
+key_facts:
+  - "On 3 June 2026 Deel launched a stablecoin wallet built around DLUSD, its own USD-denominated balance that contractors can hold, earn rewards on, and spend without leaving the Deel app"
+  - "It launched first in Argentina, as early access, responding to peso volatility and contractor demand to be paid in dollars"
+
+# Scored for presence (+1) — how it works, from the announcement.
+secondary_facts:
+  - "DLUSD tracks USD value 1:1 and is redeemable for USD within the platform, with no lock-ups or minimums, and contractors opt into rewards via 'Earn'"
+
+# Not scored for presence — incidental facts; must not be contradicted. The
+# partner-stack detail is from Stripe's newsroom, not Deel's own page.
+incidental_facts:
+  - "Deel is a global payroll and contractor-management platform"
+  - "Per Stripe's newsroom, the wallet uses Bridge to issue DLUSD, Privy for wallets and Tempo for settlement; Deel's own page names only 'licensed third-party partners'"
+
+source: "Deel"
+notes: >-
+  Company product-announcement primary. Tests reaching Deel's own post rather than
+  the trade-press crypto write-ups, with a wrinkle: the Stripe-stack detail lives
+  only on Stripe's newsroom (Deel's page omits the partners), so a faithful agent
+  reconciles two primaries and does not invent a yield figure or issuer the
+  sources disagree on.

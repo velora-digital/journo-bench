@@ -1,0 +1,41 @@
+name: 2026-05-florijn-seville-capsize
+seed: >-
+  Olympic champion Karolien Florijn's single sculls heat at the 2026 World Rowing
+  Cup I in Seville ended in a capsize; the Dutch protest was rejected.
+
+# Recency guard: the heat was on 29 May 2026 (postdates cutoffs).
+event_date: 2026-05-29
+
+# The federation's own statement (KNRB) is the primary: it is the only first-hand
+# record of the protest and its rejection. World Rowing published no standalone
+# article, and its event landing page does NOT carry the protest story, so it is
+# deliberately not listed (citing a hub that doesn't document the news is not
+# reaching the primary).
+primary_url:
+  - https://knrb.nl/nieuws/teamnl-sterk-op-eerste-racedag-world-cup-sevilla-ondanks-vroege-uitval-karolien-florijn/
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://nos.nl/artikel/2616305-roeiboot-olympisch-kampioen-florijn-slaat-om-bij-rentree-in-wereldbeker
+  - https://row-360.com/karolien-florijn-capsizes-what-went-wrong-with-the-dutch-olympic-champions-boat/
+
+key_facts:
+  - "On 29 May 2026 at the World Rowing Cup I in Seville, Karolien Florijn's boat capsized in the first few hundred metres of her women's single sculls heat, ending her race"
+  - "The KNRB lodged a protest arguing the start procedure was not fully carried out according to protocol, and the protest was rejected, so the result stood"
+
+# Scored for presence (+1) — the cause and colour, which live only in secondary
+# coverage, not the federation statement.
+secondary_facts:
+  - "The capsize followed a loose foot stretcher; Florijn had flagged it to the umpire before the start but a delay was denied, and she was retrieved safely from the water after roughly 400 metres"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "Florijn was the reigning Olympic women's single sculls champion"
+  - "The regatta is rowed on the Guadalquivir river in Seville"
+
+source: "the KNRB (Royal Dutch Rowing Federation)"
+notes: >-
+  Niche sport with a non-obvious primary. Tests whether the agent goes past the
+  rowing press (Row360, JRN) to the federation/governing-body record: the KNRB
+  statement (the only first-hand account of the protest and its rejection) and
+  World Rowing's official result. The foot-stretcher cause exists only in
+  secondary coverage, so the protest spine and the colour must be kept apart.

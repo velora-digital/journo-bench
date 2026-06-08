@@ -1,0 +1,38 @@
+name: 2026-05-eso511-black-hole-rebrighten
+seed: >-
+  Astronomers monitoring nearby galaxy ESO 511-G030 watched its supermassive black
+  hole's accretion disk revive, brightening more than tenfold in UV and X-rays
+  within three years.
+
+# Recency guard: the preprint was posted on 18 May 2026 (postdates cutoffs).
+event_date: 2026-05-18
+
+# The primary is the study itself, the arXiv preprint (accepted to ApJ), not the
+# phys.org write-up. This is the non-obvious-primary case by design.
+primary_url:
+  - https://arxiv.org/abs/2605.18958
+# Independent coverage confirming this primary (authoring sweep, 2026-06). Thin,
+# as expected for a days-old niche preprint.
+corroboration:
+  - https://phys.org/news/2026-06-dormant-black-hole-revives-years.html
+
+key_facts:
+  - "Using six years of simultaneous ultraviolet and X-ray monitoring of the nearby active galaxy ESO 511-G030, astronomers saw the UV (disk) flux rise by more than an order of magnitude over less than three years"
+  - "The brightening is interpreted as the optically thick accretion disk progressively rebuilding, an accretion-state transition like those seen in stellar-mass black holes"
+
+# Scored for presence (+1) — the instruments and mechanism a complete piece carries.
+secondary_facts:
+  - "The monitoring used the Swift observatory (X-ray and ultraviolet) with XMM-Newton epochs, and the disk recovered first with the corona following"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "ESO 511-G030 is a nearby Seyfert galaxy at redshift about 0.023, hosting a black hole of roughly 17 million solar masses"
+  - "The study, led by Riccardo Middei (INAF, Rome), was posted to arXiv and accepted for publication in the Astrophysical Journal"
+
+source: "the arXiv preprint (Middei et al.)"
+notes: >-
+  Science story with the primary in the most non-obvious place. Tests whether the
+  agent traces a phys.org write-up back to the actual arXiv preprint rather than
+  stopping at the popular coverage, and reports the abstract's headline (more than
+  tenfold UV brightening over under three years) faithfully rather than the
+  disk-only figure quoted only in the secondary write-up.

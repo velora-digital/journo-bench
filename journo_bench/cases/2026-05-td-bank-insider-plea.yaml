@@ -1,0 +1,38 @@
+name: 2026-05-td-bank-insider-plea
+seed: >-
+  A former TD Bank insider in Queens pleaded guilty in Newark federal court over
+  a scheme that facilitated more than $3.4 million in customer-account fraud.
+
+# Recency guard: the guilty plea was 27 May 2026 (postdates cutoffs).
+event_date: 2026-05-27
+
+# The DOJ / U.S. Attorney (District of New Jersey) press release. justice.gov
+# bot-blocks fetchers (403); a verbatim DOJ mirror (IRS-CI) is readable, but the
+# justice.gov URL is the canonical primary.
+primary_url:
+  - https://www.justice.gov/usao-nj/pr/bank-insider-pleads-guilty-facilitating-fraud-schemes-two-financial-institutions
+  - https://www.justice.gov/opa/pr/bank-insider-pleads-guilty-facilitating-fraud-schemes-two-financial-institutions
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.bankingdive.com/news/ex-td-employee-pleads-guilty-bank-fraud-doj/821482/
+  - https://www.irs.gov/compliance/criminal-investigation/bank-insider-pleads-guilty-to-facilitating-fraud-schemes-at-two-financial-institutions
+
+key_facts:
+  - "Cheungkin Lam, a former TD Bank employee, pleaded guilty to conspiracy to commit wire fraud affecting a financial institution and to making false bank entries"
+  - "His conduct facilitated more than $3.4 million of fraud against TD Bank customers, and he accepted at least $155,000 in bribes"
+
+# Scored for presence (+1) — how the scheme worked, from the release.
+secondary_facts:
+  - "From January to May 2021 Lam used his bank access to pull large-balance reports flagging the branch's wealthiest accounts and sold confidential customer information to outside co-conspirators who drained the accounts"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "Lam was a financial service representative at the TD Bank branch in Fresh Meadows, Queens, and pleaded guilty before U.S. District Judge Esther Salas in Newark"
+  - "Sentencing is scheduled for 15 October 2026, with each count carrying a maximum of 30 years"
+
+source: "the U.S. Attorney's Office, District of New Jersey (DOJ)"
+notes: >-
+  Justice-system primary. Tests reaching the DOJ / U.S. Attorney press release
+  rather than the American Banker write-up, and reporting the named defendant, the
+  two charges, and the $3.4m figure faithfully. justice.gov bot-blocks fetchers,
+  so a strong agent recognises it as canonical even via a verbatim mirror.

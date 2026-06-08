@@ -1,0 +1,41 @@
+name: 2026-06-cosine-lumen-sovereign
+seed: >-
+  Cosine announced Lumen Sovereign, Britain's first sovereign frontier AI model,
+  to be trained on Isambard-AI with a coalition of UK industry partners signing MoUs.
+
+# Recency guard: announced 8 June 2026 (postdates cutoffs).
+event_date: 2026-06-08
+
+# Cosine's own announcement is the sole primary for the spine: there is no
+# gov.uk/DSIT page for this specific June coalition launch (the government's
+# Sovereign AI pages cover the earlier April fund and cohort).
+primary_url:
+  - https://cosine.sh/blog/building-lumen-sovereign-uk-industry-coalition
+  - https://cosine.sh
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://tech.eu/2026/06/08/cosine-secures-industry-backing-for-britain-s-first-sovereign-frontier-model/
+  - https://www.cityam.com/britains-first-sovereign-ai-model-secures-blue-chip-backing-as-starmer-unveils-400m-plan/
+
+key_facts:
+  - "On 8 June 2026 Cosine announced Lumen Sovereign, described as Britain's first fully sovereign frontier AI"
+  - "It will be trained on the Isambard-AI supercomputer using compute from the UK government's 500m-pound Sovereign AI programme"
+  - "A coalition of UK industry and institutions signed a memorandum of understanding to co-define its use cases, security and governance"
+
+# Scored for presence (+1) — the coalition and timeline a complete piece carries.
+secondary_facts:
+  - "Coalition signatories include BAE Systems, Babcock, BT, HSBC, Leonardo, Lloyds Banking Group, LSEG, NatWest, PwC, Telefonica Tech UK&I, Thales UK and the Alan Turing Institute, with deployment readiness targeted for late 2026"
+
+# Not scored for presence — incidental facts; must not be contradicted. The 400m
+# figure in some coverage is a separate Starmer chip commitment, not this fund.
+incidental_facts:
+  - "Cosine is a London-based AI startup selected in the UK Sovereign AI Fund's first cohort"
+  - "Isambard-AI is the UK national AI supercomputer run by the University of Bristol; Cosine's allocation is 500,000 H100 GPU-hours"
+
+source: "Cosine"
+notes: >-
+  Social-origin tech-policy story (broke via an X post). Tests whether the agent
+  reaches Cosine's own blog post rather than Tech.eu/CityAM/NVIDIA write-ups, and
+  reports the coalition/MoU framing and the 500m-pound Sovereign AI programme
+  faithfully, without conflating it with the separate 400m-pound Starmer chip
+  commitment or the earlier April fund announcement.

@@ -1,0 +1,39 @@
+name: 2026-06-quebec-pstq-draw
+seed: >-
+  Quebec's early-June 2026 PSTQ draw invited 2,549 Arrima candidates across all
+  four skilled-worker streams, led by 1,094 in the highly-qualified stream.
+
+# Recency guard: the round was communicated in early June 2026 (postdates cutoffs).
+event_date: 2026-06-04
+
+# The Quebec government's (MIFI) own running record of 2026 PSTQ/Arrima invitation
+# rounds. Publicly readable but long, so automated fetches may truncate before
+# the later streams render.
+primary_url:
+  - https://www.quebec.ca/en/immigration/permanent/skilled-workers/skilled-worker-selection-program/invitation/2026
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.cicnews.com/2026/06/quebec-invites-over-2500-candidates-across-all-pstq-streams-to-apply-for-permanent-selection-0676504.html
+  - https://www.nationwidevisas.com/canada-immigration/quebec-immigration-latest-draw/
+
+# The per-stream split is in the key tier deliberately: the bare "2,549" total
+# also matched an earlier 2026 round, so the split is what disambiguates this draw.
+key_facts:
+  - "Quebec's PSTQ draw invited 2,549 candidates from the Arrima pool across all four streams"
+  - "The invitations split 1,094 to Stream 1 (highly qualified), 756 to Stream 2, 677 to Stream 3 (regulated professions) and 22 to Stream 4 (exceptional talent)"
+
+# Scored for presence (+1) — the detail a complete piece carries.
+secondary_facts:
+  - "Each stream's allocation was divided into exercises with different score cut-offs, and the invitations are to apply for permanent selection, not a final selection"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "PSTQ is Quebec's Programme de selection des travailleurs qualifies; candidates are drawn from the Arrima expression-of-interest pool"
+  - "The official Arrima extraction was timestamped 1 June 2026, with the round communicated in early June"
+
+source: "the Quebec government (MIFI)"
+notes: >-
+  Government immigration-draw primary in a non-US, partly French-language source.
+  Tests reaching Quebec's own Arrima/PSTQ 2026 invitation record rather than the
+  immigration-news aggregators, and reporting the four-stream split rather than
+  just the bare 2,549 total (which also matched an earlier 2026 round).

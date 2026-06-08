@@ -1,0 +1,37 @@
+name: 2026-06-physicsx-series-c
+seed: >-
+  UK industrial-AI startup PhysicsX raised an oversubscribed $300m Series C at a
+  roughly $2.4bn valuation, led by Temasek.
+
+# Recency guard: announced 8 June 2026 (postdates cutoffs).
+event_date: 2026-06-08
+
+# PhysicsX's own newsroom announcement. The deep-link slug is long; the /newsroom
+# index reliably lists the post.
+primary_url:
+  - https://www.physicsx.ai/newsroom/physicsx-announces-300m-series-c-to-accelerate-physics-ai-for-industrial-engineering
+  - https://www.physicsx.ai/newsroom
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.bloomberg.com/news/articles/2026-06-08/startup-physicsx-hits-2-4-billion-valuation-to-provide-ai-for-manufacturing
+  - https://tech.eu/2026/06/08/physicsx-raises-300m-at-24bn-valuation/
+
+key_facts:
+  - "PhysicsX raised an oversubscribed $300 million Series C"
+  - "The round valued the company at approximately $2.4 billion and was led by Temasek, an existing investor"
+
+# Scored for presence (+1) — the participants and purpose a complete piece carries.
+secondary_facts:
+  - "New investors M&G Investments and Intrepid Growth Partners joined, alongside existing backers including NVIDIA and Atomico, with the money funding expansion and research into 'Large Physics Models'"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "PhysicsX is headquartered in London and has grown to more than 300 staff"
+  - "Its prior round was a $135m Series B in June 2025, led by Atomico"
+
+source: "PhysicsX"
+notes: >-
+  Funding-announcement primary. Tests reaching PhysicsX's own newsroom post rather
+  than the Bloomberg write-up or the ingest tweet, and reporting the round size,
+  valuation and lead investor faithfully. The named investor list and the 'Large
+  Physics Models' framing reward an agent that reads the primary.

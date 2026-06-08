@@ -1,0 +1,36 @@
+name: 2026-05-fda-hepcludex-hdv
+seed: >-
+  On 22 May 2026 the FDA approved Hepcludex (bulevirtide-gmod), the first
+  treatment for chronic hepatitis delta virus infection in US adults.
+
+# Recency guard: approved 22 May 2026 (postdates cutoffs).
+event_date: 2026-05-22
+
+# The FDA's own press announcement. fda.gov bot-blocks fetchers, and the sponsor
+# (Gilead) wire release is more SEO-visible, so reaching the FDA page is the test.
+primary_url:
+  - https://www.fda.gov/news-events/press-announcements/fda-approves-first-treatment-chronic-hepatitis-delta-virus-hdv-infection
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.pharmacytimes.com/view/fda-approves-bulevirtide-gmod-as-first-ever-treatment-for-chronic-hepatitis-delta-virus-infection
+  - https://www.hepb.org/news-and-events/news-2/fda-approves-first-ever-treatment-for-hepatitis-delta-offering-hope-to-80000-americans/
+
+key_facts:
+  - "On 22 May 2026 the FDA approved Hepcludex (bulevirtide-gmod), the first treatment approved in the United States for chronic hepatitis delta virus (HDV) infection"
+  - "It is indicated for chronic HDV in adults without cirrhosis or with compensated cirrhosis, and was granted accelerated approval"
+
+# Scored for presence (+1) — the trial basis and sponsor a complete piece carries.
+secondary_facts:
+  - "Approval was based on the Phase 3 MYR301 study, which showed a significant combined virologic and biochemical response at Week 48; the sponsor is Gilead Sciences"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "Hepcludex is a first-in-class entry inhibitor that blocks HDV from entering liver cells via the NTCP receptor, dosed 8.5 mg once daily by subcutaneous injection"
+  - "HDV is the most severe form of viral hepatitis; an estimated 40,000 to 80,000 people in the US live with it"
+
+source: "the FDA"
+notes: >-
+  Regulatory/health primary. Tests whether the agent reaches the FDA's own press
+  announcement rather than the sponsor's wire release or Drugs.com for a landmark
+  first-in-class approval, and reports the indication and the "first treatment for
+  HDV" framing faithfully. The FDA page bot-blocks fetchers, raising the bar.
