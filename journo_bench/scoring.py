@@ -162,12 +162,17 @@ Assess five things, giving a one-sentence reason for each:
    the supporting detail a complete article carries. Same leniency: paraphrase
    counts, sourcing is ignored here. If no secondary facts are listed, true.
 
-4. cited_to_primary (true/false) + citation_reason: true if the brief cites the
-   key facts to the primary source above. Any clear reference to that source
-   counts — its name, the publication, or a link to it. Crediting the outlet
-   that carries the primary is enough; do NOT require a named wire agency,
-   journalist, byline, or exact wording. False if the facts are credited only to
-   a different, secondary outlet.
+4. cited_to_primary (true/false) + citation_reason: true only if the brief
+   attributes the key facts to the primary source DETERMINATELY — a reader can
+   tell those facts came from the primary specifically, without guessing. An
+   inline citation or footnote marker tied to the facts, or explicit phrasing
+   ("the release said", "according to {source}"), establishes this. A naked
+   statement of the facts followed by an undifferentiated list of sources does
+   NOT count, even when the primary is in that list: if the reader must dig
+   through several links to work out which one a fact came from, the provenance
+   is not established. Do NOT require a named journalist, byline, or exact
+   wording — only that each key fact is traceable to the primary. False if the
+   facts are tied only to a secondary outlet, or to no specific source.
 
 5. has_factual_error (true/false) + errors + error_reason: true if the brief
    asserts anything that contradicts a fact in ANY of the three lists above
