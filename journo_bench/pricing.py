@@ -8,9 +8,10 @@ prompts/month is an account-level allowance the API can't attribute to a single
 call, so we report the MARGINAL cost of a call at scale. The reported number is
 "what one more call costs once you're past any free quota".
 
-Velora is not priced here — for it the benchmark reports external-call counts
-(Serper, ScrapeCreators), not a dollar figure, since its cost is wholesale
-(LLM tokens, already tracked in `analytics.llm_usage`) not a vendor price.
+Velora's LLM cost stays wholesale (model tokens, tracked separately as the
+`cost` metric, not priced here). Its paid third-party calls are retail, though,
+the per-call prices Velora pays each vendor, so `velora_external_cost` prices
+those. Overall Velora cost is that external figure plus the wholesale LLM cost.
 
 Each rate lives in one constant so a vendor price change is a one-line edit.
 """
@@ -117,3 +118,20 @@ _LINKUP_PRICES = {
 
 def linkup_cost(depth: str = "deep", output_type: str = "sourcedAnswer") -> float:
     return _LINKUP_PRICES[(depth, output_type)]
+
+
+# --- Velora's paid per-call third-party rates (retail) --------------------------
+# Velora pays these per call inside a research run. The LLM token cost is wholesale
+# and tracked separately; this prices only the external calls.
+_SERPER_PER_CALL = 0.00075  # $0.00075 / Serper search (0.075 cents)
+_SCRAPECREATORS_PER_CALL = 0.002  # $0.002 / ScrapeCreators fetch (0.2 cents)
+_LINKUP_FETCH_PER_CALL = 0.001  # $0.001 / Linkup URL-fetch fallback (0.1 cents)
+
+
+def velora_external_cost(serper_calls: int, scrapecreators_calls: int, linkup_calls: int) -> float:
+    """Retail cost of a run's paid third-party calls; excludes wholesale LLM tokens."""
+    return (
+        serper_calls * _SERPER_PER_CALL
+        + scrapecreators_calls * _SCRAPECREATORS_PER_CALL
+        + linkup_calls * _LINKUP_FETCH_PER_CALL
+    )

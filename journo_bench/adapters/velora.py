@@ -22,6 +22,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from ..metrics import record_metric
+from ..pricing import velora_external_cost
 
 try:
     from src.ai.skills.type_registry import load_type_pool
@@ -62,4 +63,9 @@ async def run(seed: str) -> str:
         )
     record_metric("serper_calls", calls["serper"])
     record_metric("scrapecreators_calls", calls["scrapecreators"])
+    record_metric("linkup_calls", calls["linkup"])
+    record_metric(
+        "external_cost_usd",
+        velora_external_cost(calls["serper"], calls["scrapecreators"], calls["linkup"]),
+    )
     return result.report or ""
