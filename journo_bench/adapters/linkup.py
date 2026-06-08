@@ -13,7 +13,13 @@ from __future__ import annotations
 
 import os
 
+from ..metrics import record_metric
+from ..pricing import linkup_cost
+
 AVAILABLE = bool(os.getenv("LINKUP_API_KEY"))
+
+DEPTH = "deep"
+OUTPUT_TYPE = "sourcedAnswer"
 
 
 async def run(seed: str) -> str:
@@ -22,10 +28,12 @@ async def run(seed: str) -> str:
     client = LinkupClient(api_key=os.environ["LINKUP_API_KEY"])
     resp = await client.async_search(
         query=seed,
-        depth="deep",
-        output_type="sourcedAnswer",
+        depth=DEPTH,
+        output_type=OUTPUT_TYPE,
         include_inline_citations=True,
     )
+
+    record_metric("cost_usd", linkup_cost(DEPTH, OUTPUT_TYPE))
 
     report = resp.answer or ""
     urls = [s.url for s in (resp.sources or []) if getattr(s, "url", None)]

@@ -14,6 +14,9 @@ from __future__ import annotations
 import asyncio
 import os
 
+from ..metrics import record_metric
+from ..pricing import gemini_deep_research_cost
+
 AVAILABLE = bool(os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY"))
 
 # deep-research-max-preview-04-2026 is the more comprehensive (slower) variant.
@@ -36,9 +39,25 @@ async def run(seed: str) -> str:
     while waited < MAX_WAIT_S:
         result = await client.aio.interactions.get(interaction.id)
         if result.status == "completed":
+            _record_cost(result)
             return result.output_text or ""
         if result.status == "failed":
             return ""
         await asyncio.sleep(POLL_S)
         waited += POLL_S
     return ""
+
+
+def _record_cost(result) -> None:
+    u = getattr(result, "usage", None)
+    if u is None:
+        return
+    record_metric(
+        "cost_usd",
+        gemini_deep_research_cost(
+            input_tokens=getattr(u, "total_input_tokens", 0) or 0,
+            output_tokens=getattr(u, "total_output_tokens", 0) or 0,
+            cached_tokens=getattr(u, "total_cached_tokens", 0) or 0,
+            search_queries=getattr(u, "grounding_tool_count", 0) or 0,
+        ),
+    )

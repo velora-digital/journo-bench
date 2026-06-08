@@ -9,6 +9,9 @@ from __future__ import annotations
 
 import os
 
+from ..metrics import record_metric
+from ..pricing import perplexity_cost
+
 AVAILABLE = bool(os.getenv("PERPLEXITY_API_KEY"))
 
 MODEL = "sonar-deep-research"
@@ -25,6 +28,9 @@ async def run(seed: str) -> str:
         resp = await client.post(f"{BASE_URL}/chat/completions", headers=headers, json=payload)
         resp.raise_for_status()
         data = resp.json()
+
+    if usage := data.get("usage"):
+        record_metric("cost_usd", perplexity_cost(usage))
 
     report = data["choices"][0]["message"]["content"]
     urls = data.get("citations", []) or []

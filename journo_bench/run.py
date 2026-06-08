@@ -7,9 +7,11 @@ pydantic-evals evaluates one task at a time, so "compare N agents" is just
 a loop of `dataset.evaluate(agent)` per agent — no custom harness.
 
 Scoring happens inside the task wrapper (`_scored`), not a pydantic-evals
-evaluator, so the composite can be recorded with `increment_eval_metric`.
-A metric surfaces as an `AVG METRIC score` column in Logfire's experiment
-list (and the terminal table); an evaluator score only shows per-run.
+evaluator, so the composite lands as a metric (see `metrics.record_metric`).
+Each runner also emits its own metrics — `cost_usd` for the paid providers,
+`serper_calls`/`scrapecreators_calls` for Velora. A metric surfaces as an
+`AVG METRIC <name>` column in Logfire's experiment list (and the terminal
+table); an evaluator score only shows per-run.
 
 The Velora runner needs this repo's bootstrap (Logfire so prompts resolve;
 DB pool for any skill access). External runners need only their API key.
@@ -21,25 +23,11 @@ import argparse
 import asyncio
 from collections.abc import Awaitable, Callable
 
-from pydantic_evals.dataset import _task_run
-
 from .adapters import gemini_deep_research, gemini_grounded, linkup, perplexity, velora
 from .adapters.base import Agent
 from .dataset import load_dataset
+from .metrics import record_metric
 from .scoring import score_report
-
-
-def _record_score(value: float) -> None:
-    """Set the per-case `score` metric.
-
-    Not `increment_eval_metric`: it skips a metric whose value stays 0, which
-    silently drops a 0.0-scoring case from the average (inflating it).
-    `record_metric` sets the value unconditionally, including 0.0 and negatives.
-    """
-    run = _task_run.CURRENT_TASK_RUN.get()
-    if run is not None:
-        run.record_metric("score", value)
-
 
 REGISTRY: dict[str, tuple[Agent, bool]] = {
     "velora": (velora.run, velora.AVAILABLE),
@@ -62,7 +50,7 @@ def _scored(agent: Agent, answers: dict[str, dict]) -> Callable[[str], Awaitable
         res = await score_report(report, answers.get(seed) or {})
         if res is None:
             return {"report": report}
-        _record_score(res.score)
+        record_metric("score", res.score)
         return {"report": report, "result": res}
 
     return task

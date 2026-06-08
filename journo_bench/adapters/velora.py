@@ -21,9 +21,12 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from ..metrics import record_metric
+
 try:
     from src.ai.skills.type_registry import load_type_pool
     from src.ai.workflows.research.graph import run_research_graph
+    from src.core.api_call_meter import count_api_calls
 
     AVAILABLE = True
 except ImportError:
@@ -53,5 +56,10 @@ def _build_brief(seed: str, research_orch: str) -> str:
 async def run(seed: str) -> str:
     research_orch, research_synth = _news_skills()
     brief = _build_brief(seed, research_orch)
-    result = await run_research_graph(brief, site_id=None, research_template=research_synth or None)
+    with count_api_calls() as calls:
+        result = await run_research_graph(
+            brief, site_id=None, research_template=research_synth or None
+        )
+    record_metric("serper_calls", calls["serper"])
+    record_metric("scrapecreators_calls", calls["scrapecreators"])
     return result.report or ""

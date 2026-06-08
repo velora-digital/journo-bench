@@ -13,6 +13,9 @@ from __future__ import annotations
 import asyncio
 import os
 
+from ..metrics import record_metric
+from ..pricing import gemini_grounded_cost
+
 AVAILABLE = bool(os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY"))
 
 MODEL = "gemini-3.1-pro-preview"
@@ -33,11 +36,32 @@ async def run(seed: str) -> str:
         config=types.GenerateContentConfig(tools=[types.Tool(google_search=types.GoogleSearch())]),
     )
 
+    _record_cost(resp)
+
     report = resp.text or ""
     sources = await _grounded_sources(resp)
     if sources:
         report = f"{report}\n\nSources:\n" + "\n".join(f"- {u}" for u in sources)
     return report
+
+
+def _record_cost(resp) -> None:
+    um = getattr(resp, "usage_metadata", None)
+    if um is None:
+        return
+    cand = (resp.candidates or [None])[0]
+    gm = getattr(cand, "grounding_metadata", None)
+    queries = getattr(gm, "web_search_queries", None) or []
+    n_queries = len([q for q in queries if q])  # API returns empty strings; drop them
+    record_metric(
+        "cost_usd",
+        gemini_grounded_cost(
+            input_tokens=um.prompt_token_count or 0,
+            output_tokens=um.candidates_token_count or 0,
+            cached_tokens=getattr(um, "cached_content_token_count", 0) or 0,
+            search_queries=n_queries,
+        ),
+    )
 
 
 async def _grounded_sources(resp) -> list[str]:
