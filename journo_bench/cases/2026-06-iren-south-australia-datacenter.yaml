@@ -12,6 +12,10 @@ event_date: 2026-06-03
 primary_url:
   - https://www.globenewswire.com/news-release/2026/06/03/3305925/0/en/iren-announces-first-australian-data-center-campus-800mw-in-south-australia.html
   - https://iren.gcs-web.com/static-files/89f56bc3-0473-4a1b-a863-c6a3dba11018
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://www.stocktitan.net/news/IREN/iren-announces-first-australian-data-center-campus-800mw-in-south-hlzn4bgymswr.html
+  - https://w.media/iren-targets-bundey-transmission-hub-for-800mw-australian-data-centre-campus/
 
 key_facts:
   - "An 800MW data center campus planned in Bundey, South Australia — IREN's first announced Australian data center campus"

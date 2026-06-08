@@ -6,7 +6,13 @@ seed: >-
 event_date: 2026-06-05
 
 # Clean regulator primary (the FCA press release).
-primary_url: https://www.fca.org.uk/news/press-releases/simpler-climate-reporting-rules-could-save-firms-20m-annually
+primary_url:
+  - https://www.fca.org.uk/news/press-releases/simpler-climate-reporting-rules-could-save-firms-20m-annually
+  - https://www.fca.org.uk/publications/consultation-papers/cp26-17-quarterly-consultation-paper-no-52
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://www.moneymarketing.co.uk/news/fca-proposes-simplified-climate-reporting-rules/
+  - https://www.businessgreen.com/news/4530711/fca-moves-simplify-uk-climate-risk-reporting-investment-funds
 
 key_facts:
   - "The proposal replaces detailed TCFD product-level reports with simpler, more targeted information for retail investors"

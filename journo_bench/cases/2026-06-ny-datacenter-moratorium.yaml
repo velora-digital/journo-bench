@@ -7,7 +7,13 @@ event_date: 2026-06-04
 
 # The primary is the legislative text itself, not the press coverage (NYT, The
 # Verge, Bloomberg all re-reported it). Tests reaching the official bill page.
-primary_url: https://www.nysenate.gov/legislation/bills/2025/S10642
+primary_url:
+  - https://www.nysenate.gov/legislation/bills/2025/S10642
+  - https://www.nysenate.gov/legislation/bills/2025/A11560
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://insideclimatenews.org/news/04062026/new-york-data-center-moratorium-bill/
+  - https://www.eenews.net/articles/new-york-lawmakers-pass-first-in-nation-data-center-moratorium/
 
 key_facts:
   - "A one-year moratorium on permits for new large data centers"

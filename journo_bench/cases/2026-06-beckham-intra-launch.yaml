@@ -9,7 +9,13 @@ event_date: 2026-06-07
 # introductory post (no press release). The primary is the @intra account /
 # launch post; the news outlets (The Independent, Hello, etc.) re-reported it.
 # Tests reaching the original post vs the write-ups.
-primary_url: https://www.instagram.com/intra
+primary_url:
+  - https://www.instagram.com/intra
+  - https://www.instagram.com/p/DZLEm7IkdMT/
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://www.theindustry.fashion/romeo-beckham-adds-to-family-empire-with-launch-of-football-inspired-intra-fashion-label/
+  - https://www.hellomagazine.com/celebrities/904643/victoria-beckham-so-excited-as-romeo-teases-fashion-venture/
 
 key_facts:
   - "Romeo Beckham has launched a football-inspired fashion/sportswear brand called Intra"

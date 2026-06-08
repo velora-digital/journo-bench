@@ -11,7 +11,12 @@ event_date: 2026-06-04
 # out on); any of these counts as reaching the primary, news articles do not.
 primary_url:
   - https://corporate.lululemon.com/media/press-releases/2026/06-04-2026-210523775
+  - https://www.sec.gov/Archives/edgar/data/0001397187/000139718726000077/lulu-20260503xex991.htm
   - https://markets.ft.com/data/announce/detail?dockey=600-202606041605BIZWIRE_USPRX____20260604_BW071504-1
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://www.cnbc.com/2026/06/04/lululemon-lulu-earnings-q1-2026.html
+  - https://finance.yahoo.com/markets/stocks/articles/lululemon-shares-slide-company-lowers-095956475.html
 
 # Numbers verified against the release. The PRIOR guidance was higher
 # (~$11.35-11.50B revenue, EPS $12.10-12.30), so quoting the old figures as

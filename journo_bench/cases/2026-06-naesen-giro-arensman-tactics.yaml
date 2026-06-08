@@ -7,7 +7,13 @@ event_date: 2026-06-01
 
 # IDL Pro Cycling's OWN interview (they spoke to Naesen in Rome on the final
 # day) — the documentable written primary. Not a race report, not the team site.
-primary_url: https://www.idlprocycling.com/cycling/naesen-says-galls-giro-podium-was-built-on-unwritten-rules-smart-positioning-and-a-team-effort-against-arensman
+primary_url:
+  - https://www.idlprocycling.com/cycling/naesen-says-galls-giro-podium-was-built-on-unwritten-rules-smart-positioning-and-a-team-effort-against-arensman
+  - https://www.indeleiderstrui.nl/wielrennen/naesen-legt-uit-waarom-vingegaard-arensman-en-ongeschreven-regels-cruciaal-waren-in-giro-succes-gall
+# IDL is the English translation of indeleiderstrui.nl's own interview (same
+# newsroom). Independent corroboration is thin; Wieler Revue credits In de Leiderstrui.
+corroboration:
+  - https://wielerrevue.nl/artikel/687615
 
 key_facts:
   - "The team set the pace to hurt Thymen Arensman and INEOS rather than chase stage wins"

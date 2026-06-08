@@ -7,6 +7,10 @@ event_date: 2026-06-04
 
 # Single clear primary: the company's results release.
 primary_url: https://www.globenewswire.com/news-release/2026/06/04/3307089/0/en/Wealthfront-Reports-Fiscal-First-Quarter-2027-Results.html
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://www.stocktitan.net/news/WLTH/wealthfront-reports-fiscal-first-quarter-2027-gzlk51d581b5.html
+  - https://tradeinformer.com/broker-news/wealthfront-reports-record-assets-earnings-2027
 
 key_facts:
   - "Revenue of $90.5 million, up 7% year over year"

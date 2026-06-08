@@ -12,6 +12,11 @@ event_date: 2026-04-30
 # Spanish sports daily AS"; the agent must reach the AS original, not the re-reporting.
 # Headline: "Van der Poel: 'Formo parte de la generacion que cambio el ciclismo'".
 primary_url: https://as.com/ciclismo/mas_ciclismo/van-der-poel-formo-parte-de-la-generacion-que-cambio-el-ciclismo-f202604-n/
+# Independent coverage confirming this primary (validation sweep, 2026-06). These
+# outlets credit AS; they are relays, NOT accepted as the primary themselves.
+corroboration:
+  - https://www.cyclingnews.com/pro-cycling/teams-riders/as-part-of-a-generation-that-changed-cycling-mathieu-van-der-poel-reflects-on-how-he-wants-to-be-remembered-and-confirms-main-summer-racing-plans/
+  - https://www.idlprocycling.com/cycling/van-der-poel-confirms-participation-in-tour-de-france-but-also-has-other-notable-main-goal
 
 # Check 2 — key facts in the native Spanish (the judge credits a faithful
 # translation or paraphrase). The two claims that ARE the story: the Tour

@@ -7,7 +7,13 @@ event_date: 2026-06-05
 
 # Check 1 — the specific article the story originates from (a Lusa interview,
 # published by O Jogo), not just the outlet.
-primary_url: https://www.ojogo.pt/modalidades/artigo/joao-almeida-ja-recuperei-finalmente-mas-nao-sei-exatamente-o-que-tive/18092013
+primary_url:
+  - https://www.ojogo.pt/modalidades/artigo/joao-almeida-ja-recuperei-finalmente-mas-nao-sei-exatamente-o-que-tive/18092013
+  - https://www.lusa.pt/article/2026-06-05/47233072
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://www.cyclingnews.com/pro-cycling/teams-riders/i-feel-i-wouldnt-be-ready-tadej-pogacar-likely-to-be-without-joao-almeida-as-super-domestique-for-upcoming-tour-de-france-despite-recent-recovery/
+  - https://www.domestiquecycling.com/en/news/joao-almeida-rules-himself-out-of-the-tour-de-france-and-focuses-on-the-vuelta/
 
 # Check 2 — the key facts (native-language quotes here). The judge credits a
 # faithful translation or paraphrase. The decision and the striking illness

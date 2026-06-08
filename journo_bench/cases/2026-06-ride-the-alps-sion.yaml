@@ -9,6 +9,10 @@ event_date: 2026-05-31
 # Instagram announcement, and what a desk would link. Any ridethealps.ch/en
 # page (homepage or a climb page) counts.
 primary_url: https://ridethealps.ch/en/
+# Independent coverage confirming this primary (validation sweep, 2026-06).
+corroboration:
+  - https://www.valdanniviers.ch/en/P164149/ride-the-alps
+  - https://www.myswitzerland.com/en-ch/experiences/events/ride-the-alps/
 
 key_facts:
   - "A three-day Ride the Alps weekend runs 26-28 June 2026 in the Valais, around Sion"
