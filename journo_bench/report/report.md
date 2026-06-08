@@ -83,7 +83,7 @@ Incidental facts are the background the story touches without being about, a tea
 
 ## The score
 
-Each case scores on a single composite. An agent earns a point for reaching the primary source, a point for the key facts, a point for the secondary facts, and a point for citing the key facts to that primary. It loses two points for asserting anything that contradicts a fact in any tier. Scores run from minus two to plus four.
+Each case scores on a single composite. An agent earns a point for reaching the primary source, a point for the key facts, a point for the secondary facts, and a point for tying each key fact to that primary so a reader can check it. It loses two points for asserting anything that contradicts a fact in any tier. Scores run from minus two to plus four.
 
 ```
 score = primary_reached + key_facts_present + secondary_facts_present
@@ -94,7 +94,7 @@ score = primary_reached + key_facts_present + secondary_facts_present
 
 `key_facts_present` and `secondary_facts_present` are judged against the fixed key. A faithful translation or a paraphrase counts.
 
-`citation` asks whether the key facts are credited to the primary source the facts came from.
+`citation` asks whether each key fact is traceably tied to that primary, by an inline marker or an explicit reference a reader can follow. A primary that only sits in an undifferentiated list of sources does not earn the point: reaching a source and showing which fact came from it are scored apart.
 
 `factual_error` is the one penalty. It fires when the brief states something a listed fact contradicts.
 
@@ -104,7 +104,7 @@ The score reads only the report the agent returns, with the sources declared ins
 
 ## What we tested
 
-We ran five research products. Some are multi-step agents that browse and write a report. Others return a sourced answer from a single pass. Each agent received the same task, to research a news event and produce a brief that reaches and cites the primary source, and each otherwise ran as it ships. We tuned none of them to the cases.
+We ran five research products. Some are multi-step agents that browse and write a report. Others return a sourced answer from a single pass. Each agent received the same task, to research a news event and produce a sourced, verifiable report, and each otherwise ran as it ships. The task names no primary, no source, and no fact, so good sourcing is what the benchmark measures. We tuned none of them to the cases.
 
 [[DATA: provider and model-version table, with run dates pinned]]
 
@@ -161,6 +161,9 @@ We do not break the leaderboard down by domain. At one or two cases a domain the
 > illustration, chosen by a stated rule. The patterns to count:_
 >
 > - **Laundering.** The fact is right but credited to a secondary outlet.
+> - **No provenance trace.** The primary is reached and listed, but no fact is
+>   tied to it; the reader must dig through the sources to learn where each came
+>   from.
 > - **Fabricated specifics.** A date or figure the source never stated.
 > - **Missing the primary.** A tracker or a rival's write-up in place of the
 >   authoritative document.
