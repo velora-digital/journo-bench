@@ -1,0 +1,40 @@
+name: 2026-06-openai-chatgpt-ads-uk
+seed: >-
+  OpenAI updated its EU privacy policy to require explicit opt-in consent for
+  personalized ChatGPT ads, as the ads pilot reached the UK.
+
+# Recency guard: the EU policy update is dated 2 June 2026 (postdates cutoffs).
+event_date: 2026-06-02
+
+# OpenAI's own pages: the EU privacy policy (the opt-in change) and the ads
+# announcement. Both are bot-walled, but they are the documented primary.
+primary_url:
+  - https://openai.com/policies/eu-privacy-policy/
+  - https://openai.com/index/testing-ads-in-chatgpt/
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://digiday.com/marketing/chatgpt-ads-land-in-u-k-as-openai-outlines-eu-privacy-rules/
+  - https://ppc.land/chatgpt-ads-go-live-in-the-uk-as-openai-expands-pilot-beyond-us/
+
+key_facts:
+  - "OpenAI updated its EU privacy policy to require explicit opt-in consent, rather than legitimate interest, before serving personalized ads to EU users"
+  - "OpenAI's ChatGPT ads pilot reached the UK, its first European market"
+
+# Scored for presence (+1) — the detail a complete piece carries.
+secondary_facts:
+  - "Consenting EU users receive personalized ads; users who do not consent receive generic, contextual ads"
+  - "The UK pilot was for logged-in adult users on the Free and Go tiers, with paid tiers ad-free"
+
+# Not scored for presence — incidental facts; must not be contradicted. The EU
+# policy date sits here so misdating it (e.g. conflating it with the 7 May
+# expansion announcement) trips the error check without gating the key facts.
+incidental_facts:
+  - "The EU privacy policy update was dated 2 June 2026"
+  - "OpenAI's US ChatGPT ads test launched on 9 February 2026"
+
+source: "OpenAI"
+notes: >-
+  Company-policy primary. Tests reaching OpenAI's own EU privacy policy and
+  "Testing ads in ChatGPT" pages rather than the trade press (Digiday), which
+  paraphrases the policy without linking it, and reporting the consent-versus-
+  legitimate-interest shift and the UK pilot scope faithfully.

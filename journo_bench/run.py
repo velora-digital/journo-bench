@@ -94,6 +94,6 @@ async def main(agent: str, case_filter: str | None) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--agent", default="all", help="all | " + " | ".join(REGISTRY))
-    parser.add_argument("--case", default=None, help="run a single case by name")
+    parser.add_argument("--case", default=None, help="case name(s), comma-separated")
     args = parser.parse_args()
     asyncio.run(main(args.agent, args.case))

@@ -1,0 +1,42 @@
+name: 2026-06-intesa-mps-offer
+seed: >-
+  Intesa Sanpaolo launched a roughly 30.6bn-euro voluntary exchange offer for all
+  Monte dei Paschi di Siena shares, projecting a combined group netting over
+  16bn euros profit by 2029.
+
+# Recency guard: the offer was announced on 8 June 2026 (postdates cutoffs).
+event_date: 2026-06-08
+
+# The canonical primary forms: Intesa's formal art.102 TUF offer notice (in
+# Borsa Italiana's regulated-information store), Intesa's own MPS presentation,
+# and the dedicated IR landing page. Any of these counts as reaching the primary.
+primary_url:
+  - https://www.emarketstorage.it/sites/default/files/comunicati/2026-06/20260608_185454.pdf
+  - https://group.intesasanpaolo.com/content/dam/portalgroup/repository-documenti/investor-relations/presentazioni-en/2026/MPS_transaction_UK.pdf
+  - https://group.intesasanpaolo.com/en/investor-relations/mps
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://en.ilsole24ore.com/art/intesa-sanpaolo-launches-opas-mps-AIHsj0WD
+  - https://www.rte.ie/news/business/2026/0608/1577277-italys-intesa-launches-monte-dei-paschi-takeover-bid/
+
+key_facts:
+  - "Intesa Sanpaolo launched a voluntary public tender and exchange offer for all ordinary shares of Banca Monte dei Paschi di Siena (MPS), valued at about 30.6 billion euros"
+  - "The combined group is projected to deliver consolidated net profit above 16 billion euros in 2029"
+  - "The consideration is 1.6 newly issued Intesa shares plus 1 euro cash per MPS share, a roughly 12.5% premium to the 5 June 2026 close"
+
+# Scored for presence (+1) — the scale and economics a complete piece carries.
+secondary_facts:
+  - "The enlarged group would serve over 27 million customers"
+  - "Pre-tax synergies of about 2.9 billion euros a year are expected at full run-rate in 2029"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "Intesa simultaneously agreed that Unipol would acquire a bank operating under the MPS brand (about 635 branches) to address competition concerns"
+  - "The transaction is targeted for completion by December 2026"
+
+source: "Intesa Sanpaolo"
+notes: >-
+  M&A exchange-offer primary. Tests reaching the issuer's own price-sensitive
+  newsroom release, which is geolocation-walled so agents are tempted to settle
+  for a wire or an outlet, and reporting the offer's defining figures faithfully
+  (deal value, exchange ratio and premium, 2029 profit). Non-English issuer.

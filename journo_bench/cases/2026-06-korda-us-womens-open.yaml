@@ -1,0 +1,39 @@
+name: 2026-06-korda-us-womens-open
+seed: >-
+  Nelly Korda won the 2026 U.S. Women's Open at Riviera, closing at eight-under
+  276 to win by one and seal back-to-back majors.
+
+# Recency guard: the championship finished on 7 June 2026 (postdates cutoffs).
+event_date: 2026-06-07
+
+# The USGA's official championship leaderboard. 403s naive fetchers (normal for
+# the official site), which is part of the test.
+primary_url:
+  - https://www.uswomensopen.com/2026/scoring.html
+  - https://www.uswomensopen.com/
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.espn.com/golf/story/_/id/48995446/nelly-korda-wins-us-women-open-last-putt-just-falls-in
+  - https://www.golfchannel.com/usga/news/u-s-womens-open-2026-leaderboard-final-results-and-scores-from-riviera
+
+key_facts:
+  - "Nelly Korda won the 81st U.S. Women's Open, her fourth career major"
+  - "She finished at eight-under-par 276, winning by one stroke"
+  - "It gave her back-to-back majors of the 2026 season, after the Chevron Championship"
+
+# Scored for presence (+1) — the closing-round detail a complete report carries.
+secondary_facts:
+  - "Korda closed with a final-round two-under 69"
+
+# Not scored for presence — incidental facts; must not be contradicted.
+incidental_facts:
+  - "It was played at Riviera Country Club in Pacific Palisades, California, the first USGA women's championship held there"
+  - "Charley Hull and Gaby Lopez tied for second, one stroke back"
+
+source: "the USGA"
+notes: >-
+  Sports-result primary. Tests reaching the USGA's official championship
+  leaderboard rather than a social post or ESPN, and reporting the one-stroke
+  margin and the back-to-back-majors framing faithfully. A "looks-suspect-but-
+  true" case: the venue is unusual and it surfaced via a Ladies European Tour
+  post, but the facts hold against the USGA.

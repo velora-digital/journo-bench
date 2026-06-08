@@ -42,7 +42,8 @@ def load_dataset(case_filter: str | None = None) -> Dataset:
     paths = sorted(CASES_DIR.glob("*.yaml"))
     cases = [load_case(p) for p in paths]
     if case_filter:
-        cases = [c for c in cases if c.name == case_filter]
+        wanted = {x.strip() for x in case_filter.split(",")}
+        cases = [c for c in cases if c.name in wanted]
         if not cases:
-            raise ValueError(f"No case named '{case_filter}' in {CASES_DIR}")
+            raise ValueError(f"No case matching '{case_filter}' in {CASES_DIR}")
     return Dataset(name="journo_research", cases=cases, evaluators=[Diagnostics()])

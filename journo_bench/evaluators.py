@@ -4,8 +4,8 @@ The composite `score` is recorded as a metric in the task wrapper (so it shows
 in the experiment LIST). This evaluator is the other half: it reads the typed
 `ScoreResult` the judge already produced (passed through on the task output, so
 no second judge call) and emits each of the five checks as a pass/fail
-assertion, with the judge's one-sentence reason attached — so you can see WHAT
-failed and WHY, per case. `primary_reached` is deterministic, so no reason.
+assertion, each with the judge's one-sentence reason attached — so you can see
+WHAT failed and WHY, per case.
 """
 
 from __future__ import annotations
@@ -35,7 +35,9 @@ class Diagnostics(Evaluator[str, dict]):
         err_reason = " | ".join(err_bits) or "no contradictions"
 
         return {
-            "primary_reached": bool(res.primary),
+            "primary_reached": EvaluationReason(
+                value=bool(res.primary), reason=res.primary_reason or "—"
+            ),
             "key_facts_present": EvaluationReason(
                 value=bool(res.key_facts_present), reason=res.present_reason or "—"
             ),

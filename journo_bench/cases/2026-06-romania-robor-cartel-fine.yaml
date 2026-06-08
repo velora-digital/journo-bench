@@ -1,0 +1,38 @@
+name: 2026-06-romania-robor-cartel-fine
+seed: >-
+  Romania's competition authority fined ten banks a record 3.73 billion lei for
+  coordinating their conduct in setting the ROBOR interbank benchmark.
+
+# Recency guard: the decision was announced on 7 June 2026 (postdates cutoffs).
+event_date: 2026-06-07
+
+# The Council's own decision document (URL verified manually). The site 503s
+# automated fetchers, the same access reality as several other primaries here, so
+# an agent may cite the URL but fail to load it.
+primary_url:
+  - https://www.consiliulconcurentei.ro/wp-content/uploads/2026/02/Banci-final-Iunie-2026.pdf
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.romania-insider.com/competition-body-fines-largest-banks-romania-june-2026
+  - https://www.mlex.com/mlex/antitrust/articles/2486694
+
+key_facts:
+  - "On 7 June 2026 Romania's Competition Council fined 10 banks a total of 3.73 billion lei (about 710 million euros), its largest fine ever"
+  - "The banks were fined for coordinating their conduct during the ROBOR fixing, exchanging confidential information instead of submitting independent quotes"
+
+# Scored for presence (+1) — why the conduct mattered, from the decision.
+secondary_facts:
+  - "The coordination pushed ROBOR higher, raising costs for borrowers whose variable-rate lei loans are indexed to ROBOR"
+
+# Not scored for presence — incidental facts; must not be contradicted. Note the
+# early wires' "bank shares fell" angle was uncorroborated and is deliberately absent.
+incidental_facts:
+  - "ROBOR is the Romanian interbank reference rate set through a fixing procedure overseen by the National Bank of Romania (BNR)"
+  - "The Competition Council is chaired by Bogdan Chiritoiu"
+
+source: "Romania's Competition Council (Consiliul Concurentei)"
+notes: >-
+  Antitrust regulator primary in a non-English jurisdiction. Tests reaching the
+  Competition Council's own Romanian-language decision rather than the Bloomberg
+  wire, and reporting the exact total (3.73bn lei), the 10-bank scope, and the
+  ROBOR-fixing rationale. The regulator site is bot-blocked, raising the bar.

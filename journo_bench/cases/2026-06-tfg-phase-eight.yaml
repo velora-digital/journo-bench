@@ -1,0 +1,42 @@
+name: 2026-06-tfg-phase-eight
+seed: >-
+  TFG's full-year results booked a roughly 30m-pound Phase Eight impairment and
+  said it would accelerate right-sizing of the brand's underperforming UK stores.
+
+# Recency guard: the results were released on 5 June 2026 (postdates cutoffs).
+event_date: 2026-06-05
+
+# TFG's own FY26 results: the JSE-hosted SENS results PDF (the official filing)
+# and the investor-site results presentation. The Phase Eight detail is in the
+# results commentary, not the segment financial tables.
+primary_url:
+  - https://senspdf.jse.co.za/documents/2026/JSE/ISSE/TFG/FY2026.pdf
+  - https://tfglimited.co.za/wp-content/uploads/2026/06/FY26-Full-Year-Results-Presentation.pdf
+# Independent coverage confirming this primary (authoring sweep, 2026-06).
+corroboration:
+  - https://www.retailgazette.co.uk/blog/2026/06/phase-eight-owner-eyes-store-closures-as-part-of-restructure/
+  - https://www.businessday.co.za/companies/2026-06-05-tfg-profit-falls-as-weak-trading-and-brand-write-downs-take-toll/
+
+key_facts:
+  - "TFG took a non-cash impairment of about 30 million pounds against the Phase Eight brand, reflecting lower long-term cash-flow expectations"
+  - "TFG said it would accelerate the right-sizing of Phase Eight's footprint and costs over the next year, warning underperforming stores could close"
+
+# Scored for presence (+1) — the structural cause a complete piece carries.
+secondary_facts:
+  - "Phase Eight's department-store concession channel has fallen from about 70% of the brand's sales when TFG acquired it in 2014 to about 45%"
+
+# Not scored for presence — incidental facts; must not be contradicted. The trap:
+# the trade press attaches TFG's group-wide closure figure to the Phase Eight
+# headline. Reporting "100+ Phase Eight closures" contradicts the last fact below.
+incidental_facts:
+  - "TFG is a South Africa-based, JSE-listed retailer; the results cover the year ended 31 March 2026"
+  - "Phase Eight sits in the TFG London division alongside Hobbs, Whistles and White Stuff"
+  - "TFG's 'more than 100 store closures' figure is group-wide across its brands, not a Phase Eight number, and TFG did not give a Phase Eight closure count"
+
+source: "TFG (The Foschini Group)"
+notes: >-
+  Listed-company results primary with a conflation trap. Tests reaching TFG's own
+  FY26 results (JSE SENS / investor-site presentation) rather than the UK trade
+  write-up, and keeping the Phase Eight-specific 30m-pound impairment separate
+  from TFG's group-wide store-closure programme that the trade press merges into
+  the headline.

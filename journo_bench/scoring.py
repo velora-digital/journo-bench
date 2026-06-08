@@ -11,8 +11,11 @@ Three tiers of fact, distinct roles:
 - incidental_facts: background the story touches but isn't about (team, ticker,
                   age). Never required; just must not be got wrong.
 
-- primary_reached:        deterministic — is the specific primary article
-                          declared in the report text.
+- primary_reached:        LLM judge — did the report reach the primary source's
+                          own publication of this story, citing it in ANY official
+                          URL form. Grounded by a deterministic check on the known
+                          canonical URLs (a verbatim match is strong evidence), so
+                          it is robust to which form the agent happens to cite.
 - key_facts_present:      LLM judge — does the report convey the key facts (all
                           the essential ones), in any form. Paraphrase counts.
 - secondary_facts_present: LLM judge — does it also convey the secondary facts.
@@ -81,8 +84,10 @@ def _primary_reached(urls: list[str], report: str) -> bool:
 
 
 class JudgeVerdict(BaseModel):
-    """All four LLM checks, each with its own one-sentence reason."""
+    """All five LLM checks, each with its own one-sentence reason."""
 
+    primary_reached: bool
+    primary_reason: str
     key_facts_present: bool
     key_facts_reason: str
     secondary_facts_present: bool
@@ -104,6 +109,7 @@ class ScoreResult(BaseModel):
     citation: float
     has_factual_error: bool
     errors: list[str]
+    primary_reason: str = ""
     present_reason: str = ""
     secondary_reason: str = ""
     citation_reason: str = ""
@@ -135,25 +141,35 @@ The primary source these facts should be cited to: {source} — {primary_url}
 {incidental_facts}
 </incidental_facts>
 
-Assess four things, giving a one-sentence reason for each:
+One of the listed canonical primary URLs appears verbatim in the brief: {url_match}
 
-1. key_facts_present (true/false) + key_facts_reason: true if the brief conveys
+Assess five things, giving a one-sentence reason for each:
+
+1. primary_reached (true/false) + primary_reason: true if the brief reaches the
+   primary source — {source}'s own publication of this story — by citing or
+   linking that source's own document, in ANY official form. The canonical forms
+   are listed above, and the verbatim-match flag above is strong evidence. Count
+   it reached if the brief points to that source's own document (one of those
+   URLs, or another official URL from the same source for this story); false if
+   it points only to a secondary outlet that re-reported the story.
+
+2. key_facts_present (true/false) + key_facts_reason: true if the brief conveys
    the key facts — all the essential ones — in any form. A faithful translation
    or paraphrase counts; exact wording is not required. Ignore sourcing here.
 
-2. secondary_facts_present (true/false) + secondary_facts_reason: true if the
+3. secondary_facts_present (true/false) + secondary_facts_reason: true if the
    brief also conveys the secondary facts — all of them — in any form. These are
    the supporting detail a complete article carries. Same leniency: paraphrase
    counts, sourcing is ignored here. If no secondary facts are listed, true.
 
-3. cited_to_primary (true/false) + citation_reason: true if the brief cites the
+4. cited_to_primary (true/false) + citation_reason: true if the brief cites the
    key facts to the primary source above. Any clear reference to that source
    counts — its name, the publication, or a link to it. Crediting the outlet
    that carries the primary is enough; do NOT require a named wire agency,
    journalist, byline, or exact wording. False if the facts are credited only to
    a different, secondary outlet.
 
-4. has_factual_error (true/false) + errors + error_reason: true if the brief
+5. has_factual_error (true/false) + errors + error_reason: true if the brief
    asserts anything that contradicts a fact in ANY of the three lists above
    (key, secondary, or incidental). Incidental facts are background the story
    touches but is not about — the brief is not expected to mention them, but it
@@ -171,7 +187,7 @@ def _get_judge() -> "PydanticBaseAgent":
             name="Journo eval judge",
             model_name=JUDGE_MODEL,
             provider=LLMProvider.AZURE,
-            thinking_level=ThinkingLevel.LOW,
+            thinking_level=ThinkingLevel.MEDIUM,
             output_type=JudgeVerdict,
         )
     return _judge_agent
@@ -184,6 +200,7 @@ async def _judge_brief(
     incidental: list[str],
     source: str,
     primary_url: str,
+    url_match: bool,
 ) -> JudgeVerdict:
     prompt = JUDGE_TEMPLATE.format(
         report=report or "(empty)",
@@ -192,6 +209,7 @@ async def _judge_brief(
         primary_url=primary_url or "(not given)",
         secondary_facts="\n".join(f"- {f}" for f in secondary) or "(none)",
         incidental_facts="\n".join(f"- {f}" for f in incidental) or "(none)",
+        url_match="yes" if url_match else "no",
     )
     async with asyncio.timeout(JUDGE_TIMEOUT_S):
         return await _get_judge().run(prompt, JUDGE_SYSTEM)
@@ -205,7 +223,16 @@ async def score_report(report: str, expected: dict) -> ScoreResult | None:
         return None
 
     report = report or ""
-    primary = 1.0 if _primary_reached(urls, report) else 0.0
+    # Deterministic check on the known canonical URLs. It grounds the judge's
+    # primary_reached call (a verbatim match is strong evidence) and is the
+    # fallback when the judge is unavailable.
+    url_match = _primary_reached(urls, report)
+    primary = 1.0 if url_match else 0.0
+    primary_reason = (
+        "A listed canonical primary URL appears in the report."
+        if url_match
+        else "No listed canonical primary URL appears in the report."
+    )
 
     present, secondary, citation = 0.0, 0.0, 0.0
     has_error, errors = False, []
@@ -218,7 +245,10 @@ async def score_report(report: str, expected: dict) -> ScoreResult | None:
             expected.get("incidental_facts") or [],
             expected.get("source"),
             "; ".join(urls),
+            url_match,
         )
+        primary = 1.0 if verdict.primary_reached else 0.0
+        primary_reason = verdict.primary_reason
         present = 1.0 if verdict.key_facts_present else 0.0
         secondary = 1.0 if verdict.secondary_facts_present else 0.0
         citation = present if verdict.cited_to_primary else 0.0
@@ -228,7 +258,8 @@ async def score_report(report: str, expected: dict) -> ScoreResult | None:
         citation_reason = verdict.citation_reason
         error_reason = verdict.error_reason
         log.info(
-            "journo present=%.0f secondary=%.0f citation=%.0f error=%s %s",
+            "journo primary=%.0f present=%.0f secondary=%.0f citation=%.0f error=%s %s",
+            primary,
             present,
             secondary,
             citation,
@@ -236,7 +267,7 @@ async def score_report(report: str, expected: dict) -> ScoreResult | None:
             errors,
         )
     elif key_facts:
-        log.warning("judge unavailable — scoring primary only")
+        log.warning("judge unavailable — scoring deterministic primary only")
 
     score = primary + present + secondary + citation - (2.0 if has_error else 0.0)
     return ScoreResult(
@@ -247,6 +278,7 @@ async def score_report(report: str, expected: dict) -> ScoreResult | None:
         citation=citation,
         has_factual_error=has_error,
         errors=errors,
+        primary_reason=primary_reason,
         present_reason=present_reason,
         secondary_reason=secondary_reason,
         citation_reason=citation_reason,
