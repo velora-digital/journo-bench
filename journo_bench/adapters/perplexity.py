@@ -11,6 +11,7 @@ import os
 
 from ..metrics import record_metric
 from ..pricing import perplexity_cost
+from ._task import TASK_INSTRUCTION
 
 AVAILABLE = bool(os.getenv("PERPLEXITY_API_KEY"))
 
@@ -22,7 +23,13 @@ async def run(seed: str) -> str:
     import httpx
 
     headers = {"Authorization": f"Bearer {os.environ['PERPLEXITY_API_KEY']}"}
-    payload = {"model": MODEL, "messages": [{"role": "user", "content": seed}]}
+    payload = {
+        "model": MODEL,
+        "messages": [
+            {"role": "system", "content": TASK_INSTRUCTION},
+            {"role": "user", "content": seed},
+        ],
+    }
 
     async with httpx.AsyncClient(timeout=600) as client:
         resp = await client.post(f"{BASE_URL}/chat/completions", headers=headers, json=payload)

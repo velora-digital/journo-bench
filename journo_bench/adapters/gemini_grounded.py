@@ -15,6 +15,7 @@ import os
 
 from ..metrics import record_metric
 from ..pricing import gemini_grounded_cost
+from ._task import TASK_INSTRUCTION
 
 AVAILABLE = bool(os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY"))
 
@@ -33,7 +34,10 @@ async def run(seed: str) -> str:
     resp = await client.aio.models.generate_content(
         model=MODEL,
         contents=seed,
-        config=types.GenerateContentConfig(tools=[types.Tool(google_search=types.GoogleSearch())]),
+        config=types.GenerateContentConfig(
+            system_instruction=TASK_INSTRUCTION,
+            tools=[types.Tool(google_search=types.GoogleSearch())],
+        ),
     )
 
     _record_cost(resp)

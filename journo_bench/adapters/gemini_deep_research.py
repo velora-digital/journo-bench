@@ -16,6 +16,7 @@ import os
 
 from ..metrics import record_metric
 from ..pricing import gemini_deep_research_cost
+from ._task import TASK_INSTRUCTION
 
 AVAILABLE = bool(os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY"))
 
@@ -33,7 +34,9 @@ async def run(seed: str) -> str:
     from google import genai
 
     client = genai.Client(api_key=_key())
-    interaction = await client.aio.interactions.create(agent=AGENT, input=seed, background=True)
+    interaction = await client.aio.interactions.create(
+        agent=AGENT, input=seed, system_instruction=TASK_INSTRUCTION, background=True
+    )
 
     waited = 0
     while waited < MAX_WAIT_S:
