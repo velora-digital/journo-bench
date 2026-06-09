@@ -53,9 +53,13 @@ MODELS: dict[str, str] = {
     "perplexity_deep_research": "sonar-deep-research",
 }
 
-# The agentic deep-research tiers are slow and rate-limited; cap their fan-out so
-# 30 cases do not all run at once. Others run unbounded.
+# Cap fan-out where 30 concurrent cases would strain a shared resource: the
+# agentic deep-research tiers (slow, rate-limited) and Velora (DB pool + its own
+# Serper/LLM fan-out per case). The simple grounded APIs run unbounded.
 CONCURRENCY: dict[str, int] = {
+    "velora": 10,
+    "linkup": 4,
+    "perplexity_pro": 6,
     "gemini_deep_research": 4,
     "perplexity_deep_research": 4,
 }
@@ -96,7 +100,7 @@ async def _init_velora_pool() -> None:
 
 
 async def main(agent: str, case_filter: str | None) -> None:
-    wanted = list(REGISTRY) if agent == "all" else [agent]
+    wanted = list(REGISTRY) if agent == "all" else [a.strip() for a in agent.split(",")]
 
     selected: dict[str, Agent] = {}
     for name in wanted:
