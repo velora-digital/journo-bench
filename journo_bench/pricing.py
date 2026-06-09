@@ -140,3 +140,34 @@ def velora_external_cost(serper_calls: int, scrapecreators_calls: int, linkup_ca
         + scrapecreators_calls * _SCRAPECREATORS_PER_CALL
         + linkup_calls * _LINKUP_FETCH_PER_CALL
     )
+
+
+# --- Native app-equivalent: model + its hosted web_search tool ------------------
+# A flat per-search fee on top of model tokens. OpenAI: $10/1k calls, injected
+# search tokens free. Anthropic: $10/1k searches, result tokens bill as input
+# (already in input_tokens). $/1M (input, output) per model.
+_OPENAI_RATES: dict[str, tuple[float, float]] = {
+    "gpt-5.4": (2.50, 15.00),
+    "gpt-5.5": (5.00, 30.00),
+}
+_ANTHROPIC_RATES: dict[str, tuple[float, float]] = {
+    "claude-sonnet-4-6": (3.00, 15.00),
+    "claude-opus-4-8": (5.00, 25.00),
+}
+_WEB_SEARCH_PER_CALL = 10.00 / 1_000  # $10 / 1k for both providers
+
+
+def openai_websearch_cost(
+    input_tokens: int, output_tokens: int, search_calls: int, model: str
+) -> float:
+    in_rate, out_rate = _OPENAI_RATES[model]
+    token_cost = (input_tokens * in_rate + output_tokens * out_rate) / 1_000_000
+    return token_cost + search_calls * _WEB_SEARCH_PER_CALL
+
+
+def anthropic_websearch_cost(
+    input_tokens: int, output_tokens: int, searches: int, model: str
+) -> float:
+    in_rate, out_rate = _ANTHROPIC_RATES[model]
+    token_cost = (input_tokens * in_rate + output_tokens * out_rate) / 1_000_000
+    return token_cost + searches * _WEB_SEARCH_PER_CALL

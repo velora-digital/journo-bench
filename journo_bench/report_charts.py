@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 from pathlib import Path
-from statistics import mean
+from statistics import mean, median
 
 import pandas as pd
 from plotnine import (
@@ -53,6 +53,10 @@ LABELS = {
     "linkup": "Linkup",
     "gemini_deep_research": "Gemini Deep Research",
     "perplexity_deep_research": "Perplexity sonar-DR",
+    "chatgpt_5_4": "GPT-5.4 (web)",
+    "chatgpt_5_5": "GPT-5.5 (web)",
+    "claude_sonnet_4_6": "Claude Sonnet 4.6 (web)",
+    "claude_opus_4_8": "Claude Opus 4.8 (web)",
 }
 ACCENT = {
     "Velora": "#3b5bdb",
@@ -62,6 +66,10 @@ ACCENT = {
     "Linkup": "#e8590c",
     "Gemini Deep Research": "#1971c2",
     "Perplexity sonar-DR": "#c2255c",
+    "GPT-5.4 (web)": "#0d9488",
+    "GPT-5.5 (web)": "#0f766e",
+    "Claude Sonnet 4.6 (web)": "#c2783c",
+    "Claude Opus 4.8 (web)": "#9a5a2a",
 }
 CHECKS = [
     ("primary_reached", "Primary"),
@@ -96,7 +104,7 @@ def _load() -> tuple[pd.DataFrame, pd.DataFrame]:
         score = mean(r["score"] for r in rs)
         durs = [r["duration_s"] for r in rs if r.get("duration_s")]
         dur_runs = [
-            mean(d)
+            median(d)
             for g in runs.values()
             if (d := [x["duration_s"] for x in g if x.get("duration_s")])
         ]
@@ -108,7 +116,7 @@ def _load() -> tuple[pd.DataFrame, pd.DataFrame]:
                 "pct_lo": min(run_means) / MAXSCORE * 100,
                 "pct_hi": max(run_means) / MAXSCORE * 100,
                 "cost": mean(_cost(r) for r in rs),
-                "dur": mean(durs) if durs else 0,
+                "dur": median(durs) if durs else 0,
                 "dur_lo": min(dur_runs) if dur_runs else 0,
                 "dur_hi": max(dur_runs) if dur_runs else 0,
             }
@@ -233,7 +241,7 @@ def speed_lollipop(df: pd.DataFrame) -> None:
         + geom_text(aes(label="dur_lbl"), nudge_x=4.0, ha="left", size=10, color=INK)
         + scale_color_manual(values=_pal(d))
         + scale_x_continuous(expand=(0, 0, 0.13, 0))
-        + labs(x="Mean time per case (s)", y="")
+        + labs(x="Median time per case (s)", y="")
         + ggtitle("Speed")
         + _theme()
     )
@@ -250,7 +258,7 @@ def speed_quality(df: pd.DataFrame) -> None:
         + scale_color_manual(values=_pal(df))
         + scale_x_continuous(expand=(0.12, 0, 0.08, 0))
         + scale_y_continuous(limits=(0, 100))
-        + labs(x="Mean time per case (s)", y="Quality score (% of max)")
+        + labs(x="Median time per case (s)", y="Quality score (% of max)")
         + ggtitle("Quality vs speed")
         + _theme()
         + theme(panel_grid_major_y=element_line(color=GRIDC, size=0.6))

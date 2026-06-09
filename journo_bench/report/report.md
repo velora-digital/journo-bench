@@ -100,13 +100,32 @@ score = primary_reached + key_facts_present + secondary_facts_present
 
 The score reads only the report the agent returns, with the sources declared inside it. A source the agent found and left out does not count, applied the same way to every agent.
 
+We present the composite as a percentage of the four points on offer, so a brief that passes every check reads 100 percent and one that reaches nothing reads 0. A factual error can push a score below zero.
+
 # Methodology
 
 ## What we tested
 
-We ran five research products. Some are multi-step agents that browse and write a report. Others return a sourced answer from a single pass. Each agent received the same task, to research a news event and produce a sourced, verifiable report, and each otherwise ran as it ships. The task names no primary, no source, and no fact, so good sourcing is what the benchmark measures. We tuned none of them to the cases.
+We grouped the field into three kinds of product a newsroom could buy, and ran the current model of each.
 
-[[DATA: provider and model-version table, with run dates pinned]]
+Velora is the multi-step research agent we build. It plans a search, reaches and reads the sources, follows an attributed quote back to where it was said, and writes a sourced brief. For the benchmark it runs the generic editorial-news research skills the article pipeline uses, with no customer or site configuration loaded, so it is the agent as it ships for news across any domain.
+
+Single-pass grounded search returns one cited answer from a single grounded generation rather than a browsing loop. We ran Gemini with Google Search grounding in its Pro and Flash tiers, Linkup deep search, and Perplexity's sonar-pro.
+
+Consumer-assistant web search is what you get when you ask ChatGPT or Claude to look something up. Each desktop app's search is the same web-search tool the provider exposes on its API, so we ran it headless: GPT-5.4 and GPT-5.5 through OpenAI's Responses API, and Claude Sonnet 4.6 and Opus 4.8 through Anthropic's Messages API, each with that provider's web_search tool. This is the model and the search the app runs on, and it is not the consumer product. The apps wrap the model in a hidden system prompt and interface we cannot see or replicate, so we label these entries by model and web search rather than by app name.
+
+| Product | Model | Access | How it searches |
+|---|---|---|---|
+| Velora | velora-research | this repository | multi-step agent; editorial-news skills, no site config |
+| Gemini Grounded | gemini-3.1-pro-preview, gemini-3.5-flash | Gemini API | Google Search grounding, single pass |
+| Linkup | deep search, sourcedAnswer | Linkup API | source-quality deep search |
+| Perplexity | sonar-pro | Perplexity API | grounded search, single pass |
+| ChatGPT | gpt-5.4, gpt-5.5 | OpenAI Responses API | web_search tool, reasoning effort medium |
+| Claude | claude-sonnet-4-6, claude-opus-4-8 | Anthropic Messages API | web_search tool, default effort |
+
+Every agent received the same instruction, to produce a sourced, verifiable research report for a news publication, and otherwise ran as it ships. The instruction names no primary, no source, and no fact, so whether an agent sources well is what the benchmark measures rather than what it was told to do. We tuned none of them to the cases.
+
+One setting on the consumer-assistant models needed a deliberate choice. OpenAI's web search runs under a reasoning-effort dial, and left unset each GPT version picks a different default: GPT-5.4 barely searched, while GPT-5.5 ran an open-ended loop of more than thirty queries that took two minutes and cost ten times as much. We pinned both to medium effort, a thorough but bounded search that matches how the other products work and how the app answers an ordinary question, and that makes the two GPT versions measure the same behaviour. Claude's web search is bounded by default and needed no such setting.
 
 ## How it is scored
 
@@ -122,7 +141,7 @@ The benchmark runs 30 cases. Every provider answers the same 30, so each compari
 
 ## How cost is measured
 
-Each provider reports its own usage, the tokens or searches a run consumed. We price that usage at the provider's public list rates, so every cost figure is reproducible from the run data.
+Each provider reports its own usage, the tokens or searches a run consumed. We price that usage at the provider's public list rates, so every cost figure is reproducible from the run data. Where a tool charges a per-search fee we count the searches the run reports and price them at the published rate. For a web-search tool on a reasoning model the search results injected into the context are billed as input tokens at the model's rate, so we include them, which is why a thorough search costs more than its answer length suggests.
 
 Velora's cost is wholesale, the model tokens and API calls a run consumes. The third-party figures are retail, the price each vendor charges for the same work. The two are not strictly comparable, and we label which is which.
 
@@ -132,15 +151,18 @@ Velora's cost is wholesale, the model tokens and API calls a run consumes. The t
 
 ## Leaderboard
 
-[[DATA: composite score per provider over two runs, sorted, close providers banded not ranked]]
+> _Composite as a percentage, sorted, with a band marking the two-run range so
+> close providers read as level rather than ranked._
+
+[[DATA: charts/leaderboard_lollipop]]
 
 ## Where the points come from
 
-> _The per-dimension breakdown. A provider can score on facts while failing to
-> reach the primary, the laundering pattern. Stacked bars: primary, key,
-> secondary, citation, with error penalties marked._
+> _The per-dimension breakdown: pass rate per provider on each of the five checks.
+> A provider can score on the facts while failing to reach the primary or to cite
+> it, the laundering pattern. Shown as a provider-by-check heatmap._
 
-[[DATA: per-dimension stacked bar chart]]
+[[DATA: charts/checks_heatmap]]
 
 ## Breadth, not per-domain ranking
 
@@ -148,11 +170,12 @@ We do not break the leaderboard down by domain. At one or two cases a domain the
 
 ## Quality against cost
 
-> _Composite score against cost per run. Read the wholesale-versus-retail label
-> when reading Velora's position. Let the data decide whether this leads the
-> results or supports them._
+> _Composite percentage against cost per case, cost on a linear axis from zero so
+> a cheap provider reads cheap and not free. Read the wholesale-versus-retail
+> label when reading Velora's position. Let the data decide whether this leads
+> the results or supports them._
 
-[[DATA: quality-against-cost scatter]]
+[[DATA: charts/cost_quality]]
 
 # Failure modes
 

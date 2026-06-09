@@ -25,7 +25,15 @@ from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime
 
 from . import export
-from .adapters import gemini_deep_research, gemini_grounded, linkup, perplexity, velora
+from .adapters import (
+    chatgpt_search,
+    claude_search,
+    gemini_deep_research,
+    gemini_grounded,
+    linkup,
+    perplexity,
+    velora,
+)
 from .adapters.base import Agent
 from .dataset import load_dataset
 from .metrics import record_metric
@@ -39,6 +47,10 @@ REGISTRY: dict[str, tuple[Agent, bool]] = {
     "linkup": (linkup.run, linkup.AVAILABLE),
     "perplexity_pro": (perplexity.run_pro, perplexity.AVAILABLE),
     "perplexity_deep_research": (perplexity.run_deep_research, perplexity.AVAILABLE),
+    "chatgpt_5_4": (chatgpt_search.run_54, chatgpt_search.AVAILABLE),
+    "chatgpt_5_5": (chatgpt_search.run_55, chatgpt_search.AVAILABLE),
+    "claude_sonnet_4_6": (claude_search.run_sonnet, claude_search.AVAILABLE),
+    "claude_opus_4_8": (claude_search.run_opus, claude_search.AVAILABLE),
 }
 
 # Model label recorded with each result row, so a later re-run is a new, pinned
@@ -51,6 +63,10 @@ MODELS: dict[str, str] = {
     "linkup": f"linkup-{linkup.DEPTH}-{linkup.OUTPUT_TYPE}",
     "perplexity_pro": "sonar-pro",
     "perplexity_deep_research": "sonar-deep-research",
+    "chatgpt_5_4": "gpt-5.4",
+    "chatgpt_5_5": "gpt-5.5",
+    "claude_sonnet_4_6": "claude-sonnet-4-6",
+    "claude_opus_4_8": "claude-opus-4-8",
 }
 
 # Cap fan-out where 30 concurrent cases would strain a shared resource: the
@@ -62,6 +78,10 @@ CONCURRENCY: dict[str, int] = {
     "perplexity_pro": 6,
     "gemini_deep_research": 4,
     "perplexity_deep_research": 4,
+    "chatgpt_5_4": 8,
+    "chatgpt_5_5": 8,
+    "claude_sonnet_4_6": 6,
+    "claude_opus_4_8": 6,
 }
 
 
