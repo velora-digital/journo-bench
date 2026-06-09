@@ -29,19 +29,19 @@ AUTHORING NOTES (won't render):
 
 # Executive summary
 
-> _Write last, once numbers exist. Open with one bold headline verdict, on its
-> own line, that a journalist could paste into an article. Then the leaderboard.
-> Then findings. One finding must be a Velora weakness._
+**The AI tools that find the facts mostly cannot show you where they came from.**
 
-[[DATA: headline verdict, one sentence]]
+We ran seven research products over thirty recent news events, each with a documentable primary source, and scored whether a tool reached that source, reported its facts, and tied each fact back to it. The seven separate less on finding the right facts than on sourcing them. Reading rates run high across the field, while the rate at which a tool ties its facts to a source a reader can check runs from 77 percent down to 7.
 
-[[DATA: leaderboard: provider, score over two runs, cost per run]]
+[[DATA: charts/leaderboard_lollipop]]
 
-- **Finding 1:** PLACEHOLDER (the headline result).
-- **Finding 2:** PLACEHOLDER (the sharpest divergence between providers).
-- **Finding 3:** PLACEHOLDER (a cost-and-quality point).
-- **Finding 4:** PLACEHOLDER (a failure mode that recurs across providers).
-- **Finding 5:** PLACEHOLDER (a Velora weakness the benchmark surfaced).
+- **Velora leads at 77 percent and costs the least.** At around two cents a case it reaches the primary and ties facts to it more reliably than the rest, and it sits alone in the cheapest-and-best corner of the cost-quality chart.
+- **The open-web assistants fail on opposite axes.** GPT-5.4 cites precisely, 77 percent, and carries the least supporting detail, 42 on secondary facts. Claude Sonnet 4.6 writes the fullest brief, 77 on secondary, and ties only 35 percent of its facts to the primary.
+- **Citation is the field's weak axis and its sharpest divider.** A quarter of all briefs reach the primary and then credit the facts to something else, and Linkup ties 7 percent of its facts to a checkable source.
+- **Quality does not track cost.** The cheapest tool tested leads on quality, while GPT-5.4 cost seventeen times as much for a lower score.
+- **Velora's own weakness is supporting detail.** At 62 percent on secondary facts it trails Gemini and Claude, which read the source more fully. It reaches and attributes better than it elaborates.
+
+The lineup is current as of this draft. GPT-5.5 and Claude Opus 4.8 are queued and not yet scored.
 
 ---
 
@@ -147,22 +147,23 @@ Velora's cost is wholesale, the model tokens and API calls a run consumes. The t
 
 # Results
 
-> _Wait on the full two-run set under the −2..+4 rubric._
-
 ## Leaderboard
-
-> _Composite as a percentage, sorted, with a band marking the two-run range so
-> close providers read as level rather than ranked._
 
 [[DATA: charts/leaderboard_lollipop]]
 
+Velora leads at 77 percent. A band follows close behind, GPT-5.4 at 71, Gemini 3.5 Flash at 70 and Gemini 3.1 Pro at 68, with two-run ranges that overlap enough to read as level rather than ranked. Claude Sonnet 4.6 sits at 62. A wide gap then opens to Perplexity sonar-pro at 35 and Linkup at 29. Each figure is the percentage of a perfect brief, averaged over two runs, and the band on each marker is the spread between them.
+
 ## Where the points come from
 
-> _The per-dimension breakdown: pass rate per provider on each of the five checks.
-> A provider can score on the facts while failing to reach the primary or to cite
-> it, the laundering pattern. Shown as a provider-by-check heatmap._
-
 [[DATA: charts/checks_heatmap]]
+
+The split is in how a tool sources, not whether it finds facts. Every tool conveys the key facts most of the time, with key-fact rates from 63 to 92 percent. The separation opens on the two axes a newsroom cannot compromise: reaching the primary, and tying each fact to it.
+
+Velora reaches the primary most often, 87 percent, almost never contradicts a fact, 98, and ties facts to the primary at 73 percent. GPT-5.4 matches it on reaching, 87, and edges it on citation at 77, the best in the field. Both keep their briefs clean of error.
+
+The tools that gather the most detail cite it the least. Claude Sonnet 4.6 carries the fullest supporting record, 77 on secondary facts, and ties only 35 percent of them to the primary. Gemini 3.1 Pro reaches the primary 73 percent of the time and cites it 48. Linkup states its facts and ties 7 percent of them to a checkable source.
+
+Velora's relative weakness is the supporting detail. At 62 percent on secondary facts it trails Gemini Flash at 85, Sonnet at 77 and Gemini Pro at 75, each of which reads the source more fully. It reaches and attributes a fact better than it elaborates on it.
 
 ## Breadth, not per-domain ranking
 
@@ -170,29 +171,30 @@ We do not break the leaderboard down by domain. At one or two cases a domain the
 
 ## Quality against cost
 
-> _Composite percentage against cost per case, cost on a linear axis from zero so
-> a cheap provider reads cheap and not free. Read the wholesale-versus-retail
-> label when reading Velora's position. Let the data decide whether this leads
-> the results or supports them._
-
 [[DATA: charts/cost_quality]]
+
+Velora occupies the corner the chart is built to expose, the highest score at the lowest cost, around two cents a case. The grounded tools sit mid-cost for a similar score, Gemini Pro at eight cents and Flash at twelve. The two consumer assistants are the priciest of the everyday tier, Sonnet at twenty-one cents and GPT-5.4 at thirty-four, the latter because a thorough search bills its injected results as input tokens. Perplexity and Linkup are cheap and score low. Quality does not track cost across this field, where the cheapest tool leads.
+
+Velora's figure is wholesale, its model tokens plus the per-call price of its own searches. Every other figure is the retail price the vendor charges for the same work. The two are not strictly comparable, and the methodology section flags which is which.
 
 # Failure modes
 
-> _The qualitative core. Lead with a frequency table of each mode across all
-> cases and providers, Velora included, then show two or four excerpts as
-> illustration, chosen by a stated rule. The patterns to count:_
->
-> - **Laundering.** The fact is right but credited to a secondary outlet.
-> - **No provenance trace.** The primary is reached and listed, but no fact is
->   tied to it; the reader must dig through the sources to learn where each came
->   from.
-> - **Fabricated specifics.** A date or figure the source never stated.
-> - **Missing the primary.** A tracker or a rival's write-up in place of the
->   authoritative document.
-> - **Stale incidentals.** A changeable fact answered from memory.
+The same failures recur across the field. Counted over all 419 scored briefs:
 
-[[DATA: failure-mode frequency table, then selected excerpts]]
+| Failure | Share of briefs |
+|---|---|
+| Thin: a supporting fact dropped | 43% |
+| Missing the primary: only a secondary write-up reached | 27% |
+| Laundering: the primary reached, the facts credited elsewhere | 25% |
+| Fabricated specific: a claim a listed fact contradicts | 12% |
+
+Thin briefs are the most common and the least damaging. The fact exists in the source and the article just carries less of the record. It is the failure Velora shows most.
+
+Laundering is the one the benchmark exists to catch. A quarter of briefs reach the authoritative document and then tie their facts to a write-up instead, so a reader cannot tell the original claim from a rephrasing of it. Linkup ties 7 percent of its facts to a checkable source and Claude Sonnet 4.6 only 35, the clearest cases of facts that are right and unsourceable.
+
+Missing the primary sits close behind: more than a quarter of briefs never reach the authoritative document and report from a secondary write-up. The fabricated specific is the rarest and the worst. One brief in eight asserts a figure or claim that a listed fact contradicts, the error that becomes a correction.
+
+[[DATA: two to four illustrative excerpts, chosen by a stated rule]]
 
 # Limitations
 
