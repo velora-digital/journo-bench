@@ -1,8 +1,14 @@
-# Journalism Deep-Research Benchmark
+# journo-bench
 
 A small, reproducible benchmark for what a newsroom actually needs from a
 research agent — not generic "deep research" quality, but whether the output
-is publishable. Each case gets **one composite score**, in `[-2, +4]`:
+is publishable. The write-up lives in `journo_bench/report/` (source +
+rendered PDF); the scored runs behind it are in
+`journo_bench/results/results.jsonl`, one row per (run, provider, case),
+including every brief in full. The case set used for those runs is frozen at
+the tag `journo-bench-cases-v0.1`, committed before the first scored run.
+
+Each case gets **one composite score**, in `[-2, +4]`:
 
 ```
 score = primary_reached + key_facts_present + secondary_facts_present
@@ -72,13 +78,22 @@ agent equally. No normalisation layer; adding a competitor is one file.
 ## Running
 
 ```bash
-uv run -m evals_public.journo_research.run --agent all
-uv run -m evals_public.journo_research.run --agent velora --case 2026-05-28-some-story
+uv sync --extra providers          # SDKs for the third-party adapters
+uv run -m journo_bench.run --agent all
+uv run -m journo_bench.run --agent chatgpt_5_5 --case 2026-06-lululemon-outlook-cut
 ```
 
-Adapters are dormant unless their dependency is present: Velora needs this
-repo; `gemini_deep_research` / `gemini_grounded` need `GOOGLE_API_KEY`;
-`linkup` needs `LINKUP_API_KEY`; `perplexity` needs `PERPLEXITY_API_KEY`.
+The judge runs on `openai:gpt-5.4-mini` and needs `OPENAI_API_KEY`; without it,
+scoring falls back to the deterministic primary-URL check alone. (The published
+benchmark runs used the same judge model served through Azure — same model,
+same prompt, same checks.)
+
+Adapters are dormant unless their dependency is present: the Velora runner
+needs the Velora backend importable, so in this standalone repo it stays
+dormant — the adapter is included so the exact way Velora was invoked is
+public. `gemini_deep_research` / `gemini_grounded` need `GOOGLE_API_KEY`;
+`linkup` needs `LINKUP_API_KEY`; `perplexity` needs `PERPLEXITY_API_KEY`;
+`chatgpt_*` need `OPENAI_API_KEY`; `claude_*` need `ANTHROPIC_API_KEY`.
 
 The Velora runner injects the generic `editorial_news` research skills (the
 same guidance the article pipeline uses for news — reach the primary, follow
@@ -101,8 +116,9 @@ surfaced two ways from the one judge call:
   assertions, each with the judge's one-sentence reason. This is where you see
   *what* failed and *why*.
 
-A self-contained static scorecard (for publishing, where a Logfire link won't
-do) is a deliberate later step.
+The self-contained record is in the repo: `results/results.jsonl` for every
+scored brief, `charts/` for the figures, and `report/` for the write-up.
+Logfire is optional; runs score and export identically without it.
 
 ## Methodology notes (read before citing a result)
 

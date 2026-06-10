@@ -1,0 +1,35 @@
+[project]
+name = "journo-bench"
+version = "0.1.0"
+description = "Journalism deep-research benchmark: do AI research agents reach the primary source a newsroom would actually cite?"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "Danny Bellion" },
+    { name = "Peter Stuart" },
+]
+dependencies = [
+    "pydantic>=2.12",
+    "pydantic-ai>=1.98",
+    "pydantic-evals>=1.98",
+    "pyyaml>=6.0",
+    "httpx>=0.28",
+]
+
+[project.optional-dependencies]
+# Each provider adapter wakes up when its SDK + API key are present.
+providers = [
+    "openai>=2.34",
+    "anthropic>=0.98",
+    "google-genai>=1.75",
+    "linkup-sdk>=0.9",
+]
+# Chart + report rendering (PDF additionally needs pandoc and typst on PATH).
+report = [
+    "pandas>=3.0",
+    "plotnine>=0.15",
+]
+
+[tool.uv]
+package = false

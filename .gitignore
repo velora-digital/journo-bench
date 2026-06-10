@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.DS_Store
+uv.lock
+journo_bench/report/report.built.md
+journo_bench/synth_fixtures/out/

@@ -3,7 +3,7 @@
 Static charts for the report. Composite scores are shown as a percentage of the
 maximum (+4), so a brief that passes every check reads 100%. Run:
 
-    uv run -m evals_public.journo_research.report_charts
+    uv run -m journo_bench.report_charts
 """
 
 from __future__ import annotations

@@ -5,7 +5,7 @@ the actual figures, marks any still-unfilled `[[DATA]]` slot as a visible pendin
 note (rather than leaking raw tag text into the PDF), writes a built copy, and
 runs Pandoc with the Typst engine.
 
-    uv run -m evals_public.journo_research.render
+    uv run -m journo_bench.render
 
 Requires pandoc and typst on PATH:  brew install pandoc typst
 """

@@ -29,32 +29,30 @@ evaluator) so the result can be recorded as a metric via
 `increment_eval_metric` — a metric surfaces as a column in Logfire's
 experiment list; an evaluator score does not.
 
-PORT NOTE: the judge uses this repo's PydanticBaseAgent (already wired for
-providers). For a standalone public release, swap it for a vanilla
-pydantic-ai Agent + your own key. Behind a soft import so the module still
-loads without `src/`; scoring then falls back to the primary check alone.
+The judge is a vanilla pydantic-ai Agent on `openai:gpt-5.4-mini` and needs
+OPENAI_API_KEY; without the key, scoring falls back to the deterministic
+primary-URL check alone. The published benchmark runs used the same model
+served through Azure; the model, prompt, and checks are identical.
 """
 
 from __future__ import annotations
 
 import asyncio
 import logging
+import os
 from urllib.parse import urlsplit
 
 from pydantic import BaseModel
+from pydantic_ai import Agent
 
 log = logging.getLogger(__name__)
 
-JUDGE_MODEL = "gpt-5.4-mini"
+JUDGE_MODEL = "openai-responses:gpt-5.4-mini"
 JUDGE_TIMEOUT_S = 90
 
-try:
-    from src.ai.base.llm_config import LLMProvider, ThinkingLevel
-    from src.ai.base.pydantic_base_agent import PydanticBaseAgent
 
-    _JUDGE_AVAILABLE = True
-except ImportError:
-    _JUDGE_AVAILABLE = False
+def _judge_available() -> bool:
+    return bool(os.environ.get("OPENAI_API_KEY"))
 
 
 def _norm_url(url: str) -> str:
@@ -182,18 +180,17 @@ Assess five things, giving a one-sentence reason for each:
    omission is never an error."""
 
 
-_judge_agent = None
+_judge_agent: Agent | None = None
 
 
-def _get_judge() -> "PydanticBaseAgent":
+def _get_judge() -> Agent:
     global _judge_agent
     if _judge_agent is None:
-        _judge_agent = PydanticBaseAgent(
-            name="Journo eval judge",
-            model_name=JUDGE_MODEL,
-            provider=LLMProvider.AZURE,
-            thinking_level=ThinkingLevel.MEDIUM,
+        _judge_agent = Agent(
+            JUDGE_MODEL,
             output_type=JudgeVerdict,
+            system_prompt=JUDGE_SYSTEM,
+            model_settings={"openai_reasoning_effort": "medium"},
         )
     return _judge_agent
 
@@ -217,7 +214,8 @@ async def _judge_brief(
         url_match="yes" if url_match else "no",
     )
     async with asyncio.timeout(JUDGE_TIMEOUT_S):
-        return await _get_judge().run(prompt, JUDGE_SYSTEM)
+        result = await _get_judge().run(prompt)
+    return result.output
 
 
 async def score_report(report: str, expected: dict) -> ScoreResult | None:
@@ -242,7 +240,7 @@ async def score_report(report: str, expected: dict) -> ScoreResult | None:
     present, secondary, citation = 0.0, 0.0, 0.0
     has_error, errors = False, []
     present_reason = secondary_reason = citation_reason = error_reason = ""
-    if key_facts and _JUDGE_AVAILABLE:
+    if key_facts and _judge_available():
         verdict = await _judge_brief(
             report,
             key_facts,

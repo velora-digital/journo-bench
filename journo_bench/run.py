@@ -1,7 +1,7 @@
 """Run the benchmark: each available agent over every case, scored identically.
 
-    uv run -m evals_public.journo_research.run --agent all
-    uv run -m evals_public.journo_research.run --agent velora --case _example-template
+    uv run -m journo_bench.run --agent all
+    uv run -m journo_bench.run --agent velora --case _example-template
 
 pydantic-evals evaluates one task at a time, so "compare N agents" is just
 a loop of `dataset.evaluate(agent)` per agent — no custom harness.
