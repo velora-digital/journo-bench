@@ -252,7 +252,14 @@ We build Velora and Velora is in the benchmark. The harness, the cases, the keys
 
 The harness, the cases, the answer keys, and the per-case results live in a public repository. Running it reproduces the scoring on fixed inputs.
 
-[[DATA: repository link and the exact run command]]
+The repository is [github.com/velora-digital/journo-bench](https://github.com/velora-digital/journo-bench), and the case set behind these results is frozen at the tag `journo-bench-cases-v0.1`. The run command:
+
+```
+uv sync --extra providers
+uv run -m journo_bench.run --agent all
+```
+
+Scoring needs `OPENAI_API_KEY` for the judge; each adapter wakes when its provider key is present.
 
 Each case is one file. Adding a case or a provider is one file or one adapter. The model versions and run dates are pinned above, so a later run with newer models is a new measurement under a new version.
 
