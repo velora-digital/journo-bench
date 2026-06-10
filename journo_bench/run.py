@@ -41,6 +41,7 @@ from .scoring import score_report
 
 REGISTRY: dict[str, tuple[Agent, bool]] = {
     "velora": (velora.run, velora.AVAILABLE),
+    "velora_pro": (velora.run_pro, velora.AVAILABLE),
     "gemini_deep_research": (gemini_deep_research.run, gemini_deep_research.AVAILABLE),
     "gemini_grounded_pro": (gemini_grounded.run_pro, gemini_grounded.AVAILABLE),
     "gemini_grounded_flash": (gemini_grounded.run_flash, gemini_grounded.AVAILABLE),
@@ -57,6 +58,7 @@ REGISTRY: dict[str, tuple[Agent, bool]] = {
 # measurement rather than a silent overwrite.
 MODELS: dict[str, str] = {
     "velora": "velora-research",
+    "velora_pro": "velora-research-pro",
     "gemini_deep_research": gemini_deep_research.AGENT,
     "gemini_grounded_pro": gemini_grounded.MODEL_PRO,
     "gemini_grounded_flash": gemini_grounded.MODEL_FLASH,
@@ -74,6 +76,7 @@ MODELS: dict[str, str] = {
 # Serper/LLM fan-out per case). The simple grounded APIs run unbounded.
 CONCURRENCY: dict[str, int] = {
     "velora": 10,
+    "velora_pro": 10,
     "linkup": 4,
     "perplexity_pro": 6,
     "gemini_deep_research": 4,

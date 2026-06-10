@@ -35,6 +35,35 @@ except ImportError:
 
 NEWS_TYPE = "editorial_news"
 
+# Standard tier: the agent exactly as it ships. Pro tier: identical pipeline,
+# one variable changed — the researcher and synthesizer each move up a model
+# size. Thinking levels, prompts, skills, and every other agent stay the same,
+# so a score delta is attributable to model tier alone.
+RESEARCHER_MODEL = "gpt-5.4-nano"
+SYNTHESIZER_MODEL = "gpt-5.4-mini"
+PRO_RESEARCHER_MODEL = "gpt-5.4-mini"
+PRO_SYNTHESIZER_MODEL = "gpt-5.4"
+
+
+def _pin_models(researcher_model: str, synthesizer_model: str) -> None:
+    """Point the shared agent factory at this tier's models.
+
+    run.py evaluates providers sequentially, so tiers cannot interleave; within
+    one provider every case pins the same pair, and the model_name check makes
+    the already-pinned case a no-op.
+    """
+    from src.ai.agents.factory import get_agent_factory
+    from src.ai.agents.research.agents import (
+        build_researcher_agent,
+        build_synthesizer_agent,
+    )
+
+    factory = get_agent_factory()
+    if factory.researcher_agent.model_name != researcher_model:
+        factory.researcher_agent = build_researcher_agent(researcher_model)
+    if factory.synthesizer_agent.model_name != synthesizer_model:
+        factory.synthesizer_agent = build_synthesizer_agent(synthesizer_model)
+
 
 def _news_skills() -> tuple[str, str]:
     """(research-orchestration guidance, news synthesis template) for editorial news."""
@@ -55,6 +84,15 @@ def _build_brief(seed: str, research_orch: str) -> str:
 
 
 async def run(seed: str) -> str:
+    return await _run(seed, RESEARCHER_MODEL, SYNTHESIZER_MODEL)
+
+
+async def run_pro(seed: str) -> str:
+    return await _run(seed, PRO_RESEARCHER_MODEL, PRO_SYNTHESIZER_MODEL)
+
+
+async def _run(seed: str, researcher_model: str, synthesizer_model: str) -> str:
+    _pin_models(researcher_model, synthesizer_model)
     research_orch, research_synth = _news_skills()
     brief = _build_brief(seed, research_orch)
     with count_api_calls() as calls:

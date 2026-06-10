@@ -71,6 +71,11 @@ ACCENT = {
     "Claude Sonnet 4.6 (web)": "#c2783c",
     "Claude Opus 4.8 (web)": "#9a5a2a",
 }
+# In results.jsonl (append-only) but not in the published report: velora_pro
+# was a model-tier ablation (mini researcher / full synthesizer), kept as data,
+# excluded from the leaderboard.
+EXCLUDE = {"velora_pro"}
+
 CHECKS = [
     ("primary_reached", "Primary"),
     ("key_facts", "Key facts"),
@@ -91,6 +96,8 @@ def _load() -> tuple[pd.DataFrame, pd.DataFrame]:
     rows = [json.loads(x) for x in RESULTS.read_text().splitlines() if x.strip()]
     by: dict[str, list[dict]] = defaultdict(list)
     for r in rows:
+        if r["provider"] in EXCLUDE:
+            continue
         r["no_error"] = r.get("factual_error") is False
         by[r["provider"]].append(r)
 
@@ -186,7 +193,7 @@ def leaderboard_lollipop(df: pd.DataFrame) -> None:
         + scale_color_manual(values=_pal(d))
         + scale_x_continuous(limits=(0, 108), expand=(0, 0, 0.02, 0))
         + labs(x="Quality score (% of max)", y="")
-        + ggtitle("Primary-source benchmark")
+        + ggtitle("journo-bench")
         + _theme()
     )
     _save(p, "leaderboard_lollipop")
@@ -202,7 +209,7 @@ def leaderboard_bars(df: pd.DataFrame) -> None:
         + scale_y_continuous(limits=(0, 105), expand=(0, 0))
         + coord_flip()
         + labs(x="", y="Quality score (% of max)")
-        + ggtitle("Primary-source benchmark")
+        + ggtitle("journo-bench")
         + _theme()
     )
     _save(p, "leaderboard_bars")

@@ -30,13 +30,14 @@ def _fill(md: str) -> str:
 
     def chart(m: re.Match) -> str:
         name = Path(m.group(1).strip()).name
+        caption = (m.group(2) or "").strip()
         for ext in ("svg", "png"):
             p = CHARTS / f"{name}.{ext}"
             if p.exists():
-                return f"![]({p}){{width=85%}}"
+                return f"![{caption}]({p}){{width=85%}}"
         return f"*[missing chart: {name}]*"
 
-    md = re.sub(r"\[\[DATA:\s*charts/([^\]]+)\]\]", chart, md)
+    md = re.sub(r"\[\[DATA:\s*charts/([^\]|]+)(?:\|([^\]]+))?\]\]", chart, md)
     md = re.sub(r"\[\[DATA:\s*([^\]]+)\]\]", lambda m: f"*[pending: {m.group(1).strip()}]*", md)
     return md
 
