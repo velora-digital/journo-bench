@@ -3,7 +3,7 @@
 Static charts for the report. Composite scores are shown as a percentage of the
 maximum (+4), so a brief that passes every check reads 100%. Run:
 
-    uv run -m journo_bench.report_charts
+    uv run -m evals_public.journo_research.report_charts
 """
 
 from __future__ import annotations
@@ -193,7 +193,7 @@ def leaderboard_lollipop(df: pd.DataFrame) -> None:
         + scale_color_manual(values=_pal(d))
         + scale_x_continuous(limits=(0, 108), expand=(0, 0, 0.02, 0))
         + labs(x="Quality score (% of max)", y="")
-        + ggtitle("journo-bench")
+        + ggtitle("JournoBench")
         + _theme()
     )
     _save(p, "leaderboard_lollipop")
@@ -209,7 +209,7 @@ def leaderboard_bars(df: pd.DataFrame) -> None:
         + scale_y_continuous(limits=(0, 105), expand=(0, 0))
         + coord_flip()
         + labs(x="", y="Quality score (% of max)")
-        + ggtitle("journo-bench")
+        + ggtitle("JournoBench")
         + _theme()
     )
     _save(p, "leaderboard_bars")

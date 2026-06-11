@@ -1,12 +1,14 @@
-# journo-bench
+# JournoBench
 
 A small, reproducible benchmark for what a newsroom actually needs from a
 research agent — not generic "deep research" quality, but whether the output
-is publishable. The write-up lives in `journo_bench/report/` (source +
-rendered PDF); the scored runs behind it are in
-`journo_bench/results/results.jsonl`, one row per (run, provider, case),
-including every brief in full. The case set used for those runs is frozen at
-the tag `journo-bench-cases-v0.1`, committed before the first scored run.
+is publishable. The write-up is published at
+[velora.build/blog/004-fact-laundering-journobench](https://velora.build/blog/004-fact-laundering-journobench)
+([PDF](https://velora.build/journo-bench/journobench-report.pdf)); the scored
+runs behind it are in `journo_bench/results/results.jsonl`, one row per
+(run, provider, case), including every brief in full. The case set used for
+those runs is frozen at the tag `journo-bench-cases-v0.1`, committed before
+the first scored run.
 
 Each case gets **one composite score**, in `[-2, +4]`:
 
@@ -117,8 +119,8 @@ surfaced two ways from the one judge call:
   *what* failed and *why*.
 
 The self-contained record is in the repo: `results/results.jsonl` for every
-scored brief, `charts/` for the figures, and `report/` for the write-up.
-Logfire is optional; runs score and export identically without it.
+scored brief and `charts/` for the figures. Logfire is optional; runs score
+and export identically without it.
 
 ## Methodology notes (read before citing a result)
 

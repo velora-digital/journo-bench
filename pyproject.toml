@@ -25,7 +25,7 @@ providers = [
     "google-genai>=1.75",
     "linkup-sdk>=0.9",
 ]
-# Chart + report rendering (PDF additionally needs pandoc and typst on PATH).
+# Chart rendering from results.jsonl.
 report = [
     "pandas>=3.0",
     "plotnine>=0.15",
